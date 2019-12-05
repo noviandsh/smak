@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteBase /smak
+RewriteCond $1 !^(index\.php|assets|resource|robots\.txt)
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]

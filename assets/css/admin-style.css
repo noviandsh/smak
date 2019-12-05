@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css?family=Krub|Poppins');
+*{
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    background: url('../images/background.jpg');
+    background-size: cover;
+}
+#login-container{
+    /* max-width: 600px; */
+    height: 500px;
+    background: #1e475e;
+    margin: 50px auto;
+    padding: 160px 20px 20px 20px;
+    box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+    color: #4fd7bd;
+    position: relative;
+}
+.form-control{
+    background: none !important;
+    color: white !important;
+    border-color: #4fd7bd;
+    border-width: 2px;
+    padding-left: 30px;
+}
+.form-control::placeholder{
+    color: #4fd7bd;
+}
+.form-control:focus {
+    /* border-color: #ff3030 !important; */
+    box-shadow: 0 0 5px rgb(255, 255, 255) !important;
+}
+.form-group{
+    position: relative;
+}
+.form-user::before{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f007";
+    color: #4fd7bd;
+    display: block;
+    position: absolute;
+    left: 10px;
+    top: 8px;
+}
+.form-pass::before{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f023";
+    color: #4fd7bd;
+    display: block;
+    position: absolute;
+    left: 10px;
+    top: 8px;
+}
+.form-email::before{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f0e0";
+    color: #4fd7bd;
+    display: block;
+    position: absolute;
+    left: 10px;
+    top: 31px;
+}
+#login-container::before{
+    content: "";
+    width: 0;
+    height: 0;
+    border-bottom: 22px solid #808080;
+    border-left: 13px solid transparent;
+    position: absolute;
+    top: -22px;
+    left: 27px;
+}
+#login-container[head-text]::after{
+    content: attr(head-text);
+    font-size: 50px;
+    padding: 7px 0 15px 33px;
+    background: white;
+    color: #1e475e;
+    position: absolute;
+    top: -22px;
+    left: 40px;
+    width: 70%;
+    box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+}
+#login-container button{
+    width: 160px;
+    padding: 6px;
+    border: none;
+    background: #4fd7bd;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#login-container a{
+    color: #909090;
+}
+#peeking{
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+#peeking::before{
+    content: url(../img/peeking-sm.png);
+    /* display: block; */
+    /* background: url(../images/peeking.png); */
+    position: absolute;
+    right: -102px;
+    /* background-size: cover; */
+    z-index: 1;
+    bottom: 174px;
+}
