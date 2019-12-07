@@ -44,7 +44,6 @@
     
     <div style="margin-left:10px;">
         <a href="<?=base_url()?>admin/newarticle" type="button" class="btn btn-primary btn-s">Tambah Gallery</a>
-        <a  type="button" class="btn btn-danger btn-s" data-toggle="modal" data-target="#modal-delete"  data-file="semua" data-del="batch" data-location="gallery">Hapus Semua</a>
     </div><br>
 </div>
 <div class="box box-danger">
@@ -97,11 +96,11 @@
                 <div id="article-content">
 
                 </div>
-                <?= form_open(base_url('dataprocess/editartikel'), array('style'=>'display:none;', 'method'=>'POST', 'id'=>'edit-form')) ?>
+                <?= form_open_multipart(base_url('dataprocess/editarticle'), array('style'=>'display:none;', 'method'=>'POST', 'id'=>'edit-form')) ?>
                     <div class="form-group">
                         <label for="title-input" class="control-label">Judul</label>
                         <input type="text" class="form-control" id="title-input" name="title-input">
-                        <input type="text" hidden name="id" id="id">
+                        <input hidden type="text" name="id" id="id">
                     </div>
                     <div class="form-group">
                         <label for="image" class="control-label">Gambar Depan</label> 
@@ -109,8 +108,8 @@
                             <i class='fa fa-times'></i> Cancel
                         </button><br>
                         <img id="image" src="" alt="" style="max-width: 200px;max-height: 140px;">
-                        <input id="file-input" name="files" type='file' multiple/>
-                        <input type="text" name="old-img" id="old-img">
+                        <input id="file-input" name="files" type='file'/>
+                        <input hidden type="text" name="old-img" id="old-img">
                         <small style="color: #9a9a9a;">Max file size 2MB</small>
                     </div>
                     <div class="form-group">
@@ -119,12 +118,17 @@
                         </textarea>
                     </div>
                 </form>
+                <form style="display:none;" action="<?=base_url()?>dataprocess/deletearticle" method="post" id="delete-form">
+                    <input type="text"  id="delete-id" name="id">
+                    <input type="text"  id="delete-type" name="type">
+                    <input type="text"  id="delete-img" name="img">
+                </form>
             </div>
             <div class="modal-footer">
                 <!-- MODAL FOOTER -->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="edit-btn" class="btn btn-primary">Save changes</button>
-                <button type="button" id="delete-btn" class="btn btn-primary">Delete</button>
+                <button style="display:none;" type="button" id="edit-btn" class="btn btn-primary">Save changes</button>
+                <button style="display:none;" type="button" id="delete-btn" class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>
@@ -146,6 +150,7 @@
         let title = button.data('title'); // Extract info from data-edit attributes
         let id = button.data('id'); // Extract info from data-id attributes
         let menu = button.data('menu'); // Extract info from data-del attributes
+        let del = button.data('del'); // Extract info from data-del attributes
         let content = $('#content-'+id).val();
         let modal = $(this);
         if (menu === 'view') 
@@ -155,17 +160,23 @@
         }
         else if(menu === 'edit')
         {
+            $('#edit-btn').show();
             modal.find('#title-input').val(title);
             title = 'Edit '+title;
             $('#edit-form').show();
             CKEDITOR.instances['content-editor'].setData(content);
             modal.find('#image').attr('src', '<?=base_url()?>assets/img/article/'+$('#image-'+id).val());
             modal.find('#old-img').val($('#image-'+id).val());
+            modal.find('#id').val(id);
             firstImg = $('#image').attr('src');
         }
         else
         {
+            $('#delete-btn').show();
             title = 'Delete '+title;
+            modal.find('#delet-id').val(id);
+            modal.find('#delete-type').val(del);
+            modal.find('#delete-img').val($('#image-'+id).val());
         }
 
         modal.find('#article-title').text(title);
@@ -178,6 +189,8 @@
         $('#file-input').val('');
         $('#edit-form').hide();
         $(this).find('#article-content').html('');
+        $('#edit-btn').hide();
+        $('#delete-btn').hide();
     });
     $('#file-input').on('change', function(){
         let reader = new FileReader();
@@ -203,6 +216,6 @@
         $('#edit-form').submit();
     });
     $("#delete-btn").click(function(){
-        $('#form-delete').submit();
+        $('#delete-form').submit();
     });
 </script>
