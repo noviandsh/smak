@@ -39,6 +39,11 @@
     cursor: pointer;
 }
 
+#form-article, #form-event{
+    margin: 10px;
+    padding-bottom: 10px;
+}
+
 /* HALAMAN DEPAN */
 .gambar-kredit{
     height: 100px;
@@ -148,10 +153,6 @@
     max-width: 100%;    
 }
 
-#form-tambah-mobil{
-    margin: 10px;
-    padding-bottom: 10px;
-}
 .paket-kredit-container{
     margin: 10px;
     padding-bottom: 10px;

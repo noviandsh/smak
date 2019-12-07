@@ -6,7 +6,7 @@
     }
 ?>
 <div class="box">
-<div id="form-tambah-mobil">
+<div id="form-article">
     <?php
         if(validation_errors() !== ''){
             echo "<div class='alert alert-danger' role='alert'>".validation_errors()."</div>";

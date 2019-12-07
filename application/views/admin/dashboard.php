@@ -20,6 +20,10 @@
 	<link rel="stylesheet" href="<?=base_url('assets/css/dashboard-style.css'); ?>"/>
 
 	<link rel="stylesheet" href="<?=base_url('assets/css/magnific-popup.css'); ?>">
+  
+  <link href="<?php echo base_url('assets/css/jquery-ui.css');?>" rel="stylesheet"/>
+  <link href="<?php echo base_url('assets/css/jquery-ui.theme.css');?>" rel="stylesheet"/>
+  <link href="<?php echo base_url('assets/css/jquery-ui-timepicker-addon.css');?>" rel="stylesheet"/>
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>

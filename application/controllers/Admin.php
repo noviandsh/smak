@@ -37,15 +37,19 @@ class Admin extends CI_Controller {
     public function article()
     {
         $subData['article'] = $this->crud->Get('article');
+        $subData['event'] = $this->crud->Get('event');
         $data['content'] = $this->load->view('admin/sub-page/artikel', $subData, TRUE);
         $this->load->view('admin/dashboard', $data);
     }
 
     public function newArticle()
     {
-
-        $subData['bla'] = 'blas';
-        $data['content'] = $this->load->view('admin/sub-page/artikel-baru', $subData, TRUE);
+        $data['content'] = $this->load->view('admin/sub-page/artikel-baru', '', TRUE);
+        $this->load->view('admin/dashboard', $data);
+    }
+    public function newEvent()
+    {
+        $data['content'] = $this->load->view('admin/sub-page/event-baru', '', TRUE);
         $this->load->view('admin/dashboard', $data);
     }
 }
