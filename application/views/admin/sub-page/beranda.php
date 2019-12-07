@@ -94,9 +94,11 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Apakah anda yakin akan menghapus <span style="color:red;" id="delete-name"></span> dari <span id="delete-location"></span>?</h4>
-            <form action="<?=base_url()?>dataproccess/hapusSlider" method="post" id="form-delete">
+            <form action="<?=base_url()?>dataprocess/deleteimages" method="post" id="form-delete">
                 <input type="text" id="delete-id" name="id">
+                <input type="text" id="delete-filename" name="filename">
                 <input type="text" id="delete-type" name="jenis">
+                <input type="text" id="form-location" name="location">
             </form>
         </div>
         <div class="modal-footer">
@@ -139,7 +141,9 @@
         let modal = $(this);
         modal.find('#delete-name').text(name);
         modal.find('#delete-location').text(loc);
+        modal.find('#form-location').val(loc);
         modal.find('#delete-id').val(id);
+        modal.find('#delete-filename').val(name);
         modal.find('#delete-type').val(del);
         $("#delete-btn").click(function(){
             $('#form-delete').submit();

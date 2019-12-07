@@ -25,11 +25,27 @@ class Admin extends CI_Controller {
         $data['title'] = "Admin Login";
         $this->load->view('admin', $data);
     }
+
     public function dashboard()
     {
         $subData['slider'] = $this->crud->Get('slider');
         $subData['gallery'] = $this->crud->Get('gallery');
         $data['content'] = $this->load->view('admin/sub-page/beranda', $subData, TRUE);
+        $this->load->view('admin/dashboard', $data);
+    }
+
+    public function article()
+    {
+        $subData['article'] = $this->crud->Get('article');
+        $data['content'] = $this->load->view('admin/sub-page/artikel', $subData, TRUE);
+        $this->load->view('admin/dashboard', $data);
+    }
+
+    public function newArticle()
+    {
+
+        $subData['bla'] = 'blas';
+        $data['content'] = $this->load->view('admin/sub-page/artikel-baru', $subData, TRUE);
         $this->load->view('admin/dashboard', $data);
     }
 }
