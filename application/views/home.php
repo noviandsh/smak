@@ -151,16 +151,23 @@ function readMore($str, $char)
                 </div>
             </div>
             <div id="testi">
-                <div class="testi-card">
-                    <span class="title">Lorem, ipsum dolor.</span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus expedita deleniti mollitia consequuntur accusantium sequi, accusamus ab obcaecati inventore iste labore rem itaque corrupti aliquid libero non dolorum magnam voluptas.</p>
-                    <div class="testi-profile">
-                        <div class="profile-photo" style="background:url('<?=base_url()?>assets/img/1.jpg');background-size: cover;background-position: center;">
-                        </div>
-                        <span class="profile-name">Novian D Syahrizal</span>                        <small>Kepanjen, Alumni 2014</small>
-                    </div>
-                </div>
-                <div class="testi-card">
+                <?php
+                    foreach($testi as $val){
+                        echo "<div class='testi-card'>
+                                <p>".$val['testimoni']."</p>
+                                <div class='testi-profile'>
+                                    <div class='profile-photo' style='background:url(".base_url('assets/img/alumni/'.$val['photo']).");background-size: cover;background-position: center;'>
+                                    </div>
+                                    <div>
+                                        <span class='profile-name'>".ucwords($val['name'])."</span><br>
+                                        <small>".ucfirst($val['home']).", Alumni ".$val['year']."</small>
+                                    </div>
+                                </div>
+                            </div>";
+                    }
+                ?>
+                
+                <!-- <div class="testi-card">
                     <span class="title">Lorem, ipsum dolor.</span>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus expedita deleniti mollitia consequuntur accusantium sequi, accusamus ab obcaecati inventore iste labore rem itaque corrupti aliquid libero non dolorum magnam voluptas.</p>
                     <div class="testi-profile">
@@ -189,7 +196,7 @@ function readMore($str, $char)
                         <span class="profile-name">Syahrizal D Novian</span>
                         <small>Kepanjen, Alumni 2014</small>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

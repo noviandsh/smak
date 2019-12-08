@@ -47,6 +47,7 @@ class Home extends CI_Controller {
 			$data['event'][$n]['endDate'] = $this->dateExplode($a['endDate']);
 			$n++;
 		}
+		$data['testi'] = $this->crud->Get('testi');
 		$data['article'] = $this->crud->Get('article');
 		$data['slider'] = $this->crud->Get('slider');
 		$data['gallery'] = $this->crud->Get('gallery');

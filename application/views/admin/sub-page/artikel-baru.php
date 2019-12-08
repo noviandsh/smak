@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         <label for="files">Gambar Depan</label>
-        <input name="files" type='file' multiple/>
+        <input name="files" type='file'/>
         <small style="color: #9a9a9a;">Max file size 2MB</small>  
     </div>
     <div class="form-group">

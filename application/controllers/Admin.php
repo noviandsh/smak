@@ -52,6 +52,18 @@ class Admin extends CI_Controller {
         $data['content'] = $this->load->view('admin/sub-page/event-baru', '', TRUE);
         $this->load->view('admin/dashboard', $data);
     }
+    
+    public function testi()
+    {
+        $subData['testi'] = $this->crud->Get('testi');
+        $data['content'] = $this->load->view('admin/sub-page/testi', $subData, TRUE);
+        $this->load->view('admin/dashboard', $data);
+    }
+    public function newTesti()
+    {
+        $data['content'] = $this->load->view('admin/sub-page/testi-baru', '', TRUE);
+        $this->load->view('admin/dashboard', $data);
+    }
 }
 
 /* End of file Admin.php */

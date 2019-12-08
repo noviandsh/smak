@@ -227,6 +227,89 @@ class Dataprocess extends CI_Controller {
         }
         redirect(base_url('admin/article'));
     }
+
+    /*
+    | -------------------------------------------------------------------------
+    | TESTI
+    | -------------------------------------------------------------------------
+    */
+    // TAMBAH TESTI
+    public function newTesti()
+    {
+        // $this->ceklogin();
+        
+        $data = array(
+            'name' => $_POST['name'],
+            'year' => $_POST['year'],
+            'home' => $_POST['home'],
+            'testimoni' => $_POST['testi'],
+        );
+        
+        $uploaded = $this->crud->pict('alumni', 'photo');
+        if ($uploaded['status'] == 1) {
+            $data['photo'] = $this->upload->data('file_name');
+        }
+        $insert = $this->crud->Insert('testi', $data);
+        if($insert){
+            $this->session->set_flashdata('success', 'Testimoni Berhasil Ditambahkan');
+        }else{
+            $this->session->set_flashdata('error', 'Testimoni Gagal Ditambahkan');
+        }
+        redirect(base_url('admin/testi'));
+    }
+    // EDIT TESTI
+    public function editTesti()
+    {
+        // $this->ceklogin();
+        $oldImg = $_POST['edit-image-old-article'];
+        $data = array(
+            'title' => strtolower($_POST['edit-title-article']),
+            'link' => $this->clean($_POST['edit-title-article']),
+            'content' => $_POST['content-article']
+        );
+        // Jika mengganti gambar depan
+        if(!empty($_FILES['edit-image-article']['name'])){
+            $data['image'] = $_FILES['edit-image-article']['name'];
+            $uploaded = $this->crud->pict('article', 'edit-image-article');
+            // Jika gambar depan lama bukan blank
+            if($oldImg !== 'blank.jpg'){
+                $image = $oldImg;
+                $extension_pos = strrpos($image, '.'); // find position of the last dot, so where the extension starts
+                $thumb = substr($image, 0, $extension_pos) . '_thumb' . substr($image, $extension_pos);
+                unlink(FCPATH.'assets/img/article/'.$image);
+                unlink(FCPATH.'assets/img/article/'.$thumb);
+            }
+        }
+        $update = $this->crud->Update('article', $data, array('id'=>$_POST['edit-id-article']));
+        if($update){
+            $this->session->set_flashdata('success', 'Artikel Berhasil Diubah');
+        }else{
+            $this->session->set_flashdata('error', 'Artikel Gagal Diubah');
+        }
+        redirect(base_url('admin/article'));
+    }
+    // DELETE TESTI
+    public function deleteTesti()
+    {
+        // $this->ceklogin();
+        $id = $_POST['id'];
+        $group = $_POST['group'];
+        $img = $_POST['img'];
+        $delete = $this->crud->Delete($group, array('id' => $id));
+        
+        if($delete){
+            if($img !== 'blank.jpg'){
+                $extension_pos = strrpos($img, '.'); // find position of the last dot, so where the extension starts
+                $thumb = substr($img, 0, $extension_pos) . '_thumb' . substr($img, $extension_pos);
+                unlink(FCPATH.'assets/img/'.$group.'/'.$img);
+                unlink(FCPATH.'assets/img/'.$group.'/'.$thumb);
+            }
+            $this->session->set_flashdata('success', ucfirst($group).' Berhasil Dihapus');
+        }else{
+            $this->session->set_flashdata('error', ucfirst($group).' Gagal Dihapus');
+        }
+        redirect(base_url('admin/article'));
+    }
 }
 
 /* End of file Dataprocess.php */

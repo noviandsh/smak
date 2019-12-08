@@ -328,7 +328,6 @@ html, body{
     height: 200px;
     width: 300px;
     margin: 5px;
-    border: 1px solid blue;
 }
 .gallery-item h1{
     position: absolute;
@@ -358,7 +357,7 @@ html, body{
     background-color: rgba(255, 255, 255, 0.3);
     border-bottom: .5px solid #eee;
     display: grid;
-    grid-template-columns: 35% auto;
+    grid-template-columns: 150px auto;
     grid-column-gap: 20px;
     padding: 20px;
 }
@@ -490,9 +489,11 @@ html, body{
     left: -15px;
     padding: 10px;
     color: white;
+    display: grid;
+    grid-template-columns: 115px auto;
 }
-.testi-profile>small{
-    float: left;
+.testi-profile small{
+    /* float: left; */
     margin-top: 5px;
 }
 .testi-profile:before{
@@ -517,7 +518,7 @@ html, body{
     margin-right: 20px;
 }
 .profile-name{
-    float: left;
+    /* float: left; */
     font-size: 20px;
 }
 
