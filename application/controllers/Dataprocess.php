@@ -261,54 +261,54 @@ class Dataprocess extends CI_Controller {
     public function editTesti()
     {
         // $this->ceklogin();
-        $oldImg = $_POST['edit-image-old-article'];
+        $oldImg = $_POST['image-old'];
         $data = array(
-            'title' => strtolower($_POST['edit-title-article']),
-            'link' => $this->clean($_POST['edit-title-article']),
-            'content' => $_POST['content-article']
+            'name' => strtolower($_POST['name']),
+            'year' => $this->clean($_POST['year']),
+            'home' => $_POST['home'],
+            'testimoni' => $_POST['testi']
         );
         // Jika mengganti gambar depan
-        if(!empty($_FILES['edit-image-article']['name'])){
-            $data['image'] = $_FILES['edit-image-article']['name'];
-            $uploaded = $this->crud->pict('article', 'edit-image-article');
+        if(!empty($_FILES['image']['name'])){
+            $data['photo'] = $_FILES['image']['name'];
+            $uploaded = $this->crud->pict('alumni', 'image');
             // Jika gambar depan lama bukan blank
             if($oldImg !== 'blank.jpg'){
                 $image = $oldImg;
                 $extension_pos = strrpos($image, '.'); // find position of the last dot, so where the extension starts
                 $thumb = substr($image, 0, $extension_pos) . '_thumb' . substr($image, $extension_pos);
-                unlink(FCPATH.'assets/img/article/'.$image);
-                unlink(FCPATH.'assets/img/article/'.$thumb);
+                unlink(FCPATH.'assets/img/alumni/'.$image);
+                unlink(FCPATH.'assets/img/alumni/'.$thumb);
             }
         }
-        $update = $this->crud->Update('article', $data, array('id'=>$_POST['edit-id-article']));
+        $update = $this->crud->Update('testi', $data, array('id'=>$_POST['id']));
         if($update){
-            $this->session->set_flashdata('success', 'Artikel Berhasil Diubah');
+            $this->session->set_flashdata('success', 'Testimoni Berhasil Diubah');
         }else{
-            $this->session->set_flashdata('error', 'Artikel Gagal Diubah');
+            $this->session->set_flashdata('error', 'Testimoni Gagal Diubah');
         }
-        redirect(base_url('admin/article'));
+        redirect(base_url('admin/testi'));
     }
     // DELETE TESTI
     public function deleteTesti()
     {
         // $this->ceklogin();
         $id = $_POST['id'];
-        $group = $_POST['group'];
         $img = $_POST['img'];
-        $delete = $this->crud->Delete($group, array('id' => $id));
+        $delete = $this->crud->Delete('testi', array('id' => $id));
         
         if($delete){
             if($img !== 'blank.jpg'){
                 $extension_pos = strrpos($img, '.'); // find position of the last dot, so where the extension starts
                 $thumb = substr($img, 0, $extension_pos) . '_thumb' . substr($img, $extension_pos);
-                unlink(FCPATH.'assets/img/'.$group.'/'.$img);
-                unlink(FCPATH.'assets/img/'.$group.'/'.$thumb);
+                unlink(FCPATH.'assets/img/alumni/'.$img);
+                unlink(FCPATH.'assets/img/alumni/'.$thumb);
             }
-            $this->session->set_flashdata('success', ucfirst($group).' Berhasil Dihapus');
+            $this->session->set_flashdata('success', 'Testimoni Berhasil Dihapus');
         }else{
-            $this->session->set_flashdata('error', ucfirst($group).' Gagal Dihapus');
+            $this->session->set_flashdata('error', 'Testimoni Gagal Dihapus');
         }
-        redirect(base_url('admin/article'));
+        redirect(base_url('admin/testi'));
     }
 }
 
