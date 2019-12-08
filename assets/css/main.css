@@ -314,7 +314,7 @@ html, body{
     background: -webkit-linear-gradient(to right, rgba(109, 213, 237, 0.9), rgba(33, 147, 176, 0.9));  
     background: linear-gradient(to right, rgba(109, 213, 237, 0.9), rgba(33, 147, 176, 0.9)); 
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: auto auto;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
 }
@@ -358,7 +358,7 @@ html, body{
     background-color: rgba(255, 255, 255, 0.3);
     border-bottom: .5px solid #eee;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 35% auto;
     grid-column-gap: 20px;
     padding: 20px;
 }
@@ -490,6 +490,10 @@ html, body{
     left: -15px;
     padding: 10px;
     color: white;
+}
+.testi-profile>small{
+    float: left;
+    margin-top: 5px;
 }
 .testi-profile:before{
     content: "";

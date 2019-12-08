@@ -129,8 +129,8 @@ $('.control-next').click(function () {
 $("#testi").slick({
     slidesToShow: 3,
     arrows: false,
-    autoplay: true,
-    autoplaySpeed: 3000,
+    // autoplay: true,
+    // autoplaySpeed: 3000,
     responsive: [
         {
             breakpoint: 1024,
@@ -148,7 +148,6 @@ $("#testi").slick({
         }
     ]
 });
-// 10000064400710
 $("#gallery-box").slick({
     centerPadding: '60px',
     slidesToShow: 5,

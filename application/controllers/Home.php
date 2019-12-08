@@ -26,9 +26,28 @@ class Home extends CI_Controller {
 		$this->load->model('crud');
 		
 	}
-	
+	public function dateExplode($var)
+	{
+		$raw = explode(" ", $var);
+		$rawDate = explode("-", $raw[0]);
+		$res = array(
+			'hour' => substr($raw[1], 0, 5),
+			'date' => $rawDate[2],
+			'month' => $rawDate[1],
+			'year' => $rawDate[0]
+		);
+		return $res;
+	}
 	public function index()
 	{
+		$data['event'] = $this->crud->Get('event');
+		$n = 0;
+		foreach($data['event'] as $a){
+			$data['event'][$n]['startDate'] = $this->dateExplode($a['startDate']);
+			$data['event'][$n]['endDate'] = $this->dateExplode($a['endDate']);
+			$n++;
+		}
+		$data['article'] = $this->crud->Get('article');
 		$data['slider'] = $this->crud->Get('slider');
 		$data['gallery'] = $this->crud->Get('gallery');
 		$this->load->view('home', $data);

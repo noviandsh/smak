@@ -1,5 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+function readMore($str, $char)
+{
+    $s = substr($str, 0, $char);
+    $result = substr($s, 0, strrpos($s, ' '));
+    $result = strip_tags($result);
+    return $result;
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,15 +89,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>";
                             }
                         ?>
-                        <!-- <div class="slider-item">
-                            <img src="<?=base_url()?>assets/img/2.jpg" alt="">
-                        </div>
-                        <div class="slider-item">
-                            <img src="<?=base_url()?>assets/img/3.jpg" alt="">
-                        </div>
-                        <div class="slider-item">
-                            <img src="<?=base_url()?>assets/img/4.jpg" alt="">
-                        </div> -->
                     </div>
                 </div>
                 <div id="header-filter">
@@ -115,66 +114,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div id="content-filter">
                     <div id="news">
                         <span class="content-title">Berita & Informasi Terbaru</span><br><br>
-                        <div class="news-item">
-                            <img src="<?=base_url()?>assets/img/1.jpg" alt="">
-                            <div class="desc">
-                                <h2><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-                                <span>29 Oktober 2019</span>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro neque id dolore labore. Dolorem quae obcaecati voluptates architecto perspiciatis rerum.</p>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <img src="<?=base_url()?>assets/img/2.jpg" alt="">
-                            <div class="desc">
-                                <h2><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-                                <span>29 Oktober 2019</span>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro neque id dolore labore. Dolorem quae obcaecati voluptates architecto perspiciatis rerum.</p>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <img src="<?=base_url()?>assets/img/3.jpg" alt="">
-                            <div class="desc">
-                                <h2><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-                                <span>29 Oktober 2019</span>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro neque id dolore labore. Dolorem quae obcaecati voluptates architecto perspiciatis rerum.</p>
-                            </div>
-                        </div>
+                        <?php
+                            foreach($article as $a){
+                                echo "<div class='news-item'>
+                                        <img src='".base_url('assets/img/article/'.$a['image'])."' alt=''>
+                                        <div class='desc'>
+                                            <h2><a href='".base_url($a['link'])."'>".ucwords($a['title'])."</a></h2>
+                                            <span>".date("j F Y", strtotime($a['date']))."</span>
+                                            <div>".readMore($a['content'], 200)." ...</div>
+                                        </div>
+                                    </div>";
+                            }
+                        ?>
                     </div>
                     <div id="agenda">
                         <span class="content-title">Info Kegiatan</span><br><br>
-                        <div class="agenda-item">
-                            <div class="calendar">
-                                <div class="month">DEC</div>
-                                <div class="date">29</div>
-                            </div>
-                            <div class="desc">
-                                <h2><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-                                <span>11:00 - 16:00 (August 31, 2019) | Aula SMKN 1 Cerme</span>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro neque id dolore labore. Dolorem quae obcaecati voluptates architecto perspiciatis rerum.</p>
-                            </div>
-                        </div>
-                        <div class="agenda-item">
-                            <div class="calendar">
-                                <div class="month">DEC</div>
-                                <div class="date">29</div>
-                            </div>
-                            <div class="desc">
-                                <h2><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-                                <span>11:00 - 16:00 (August 31, 2019) | Aula SMKN 1 Cerme</span>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro neque id dolore labore. Dolorem quae obcaecati voluptates architecto perspiciatis rerum.</p>
-                            </div>
-                        </div>
-                        <div class="agenda-item">
-                            <div class="calendar">
-                                <div class="month">DEC</div>
-                                <div class="date">29</div>
-                            </div>
-                            <div class="desc">
-                                <h2><a href="#">Lorem ipsum dolor sit amet.</a></h2>
-                                <span>11:00 - 16:00 (August 31, 2019) | Aula SMKN 1 Cerme</span>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro neque id dolore labore. Dolorem quae obcaecati voluptates architecto perspiciatis rerum.</p>
-                            </div>
-                        </div>
+                        <?php
+                            $month = array('01' => 'JAN','02' => 'FEB','03' => 'MAR','04' => 'APR','05' => 'MEI','06' => 'JUN','07' => 'JUL','08' => 'AUG','09' => 'SEP','10' => 'OKT','11' => 'NOV','12' => 'DEC');
+                            foreach($event as $e){
+                                echo "<div class='agenda-item'>
+                                        <div class='calendar'>
+                                            <div class='month'>".$month[$e['startDate']['month']]."</div>
+                                            <div class='date'>".$e['startDate']['date']."</div>
+                                        </div>
+                                        <div class='desc'>
+                                            <h2><a href='#'>".ucwords($e['title'])."</a></h2>
+                                            <span><i class='fas fa-map-marker-alt'></i> ".ucfirst($e['location'])."</span>
+                                            <div>".readMore($e['description'], 200)." ...</div>
+                                        </div>
+                                    </div>";
+                            }
+                        ?>
+                        
                     </div>
                     </div>
                 </div>
@@ -186,7 +157,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="testi-profile">
                         <div class="profile-photo" style="background:url('<?=base_url()?>assets/img/1.jpg');background-size: cover;background-position: center;">
                         </div>
-                        <span class="profile-name">Novian D Syahrizal</span>
+                        <span class="profile-name">Novian D Syahrizal</span>                        <small>Kepanjen, Alumni 2014</small>
                     </div>
                 </div>
                 <div class="testi-card">
@@ -196,6 +167,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="profile-photo" style="background:url('<?=base_url()?>assets/img/1.jpg');background-size: cover;background-position: center;">
                         </div>
                         <span class="profile-name">Syahrizal D Novian</span>
+                        <small>Kepanjen, Alumni 2014</small>
                     </div>
                 </div>
                 <div class="testi-card">
@@ -205,6 +177,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="profile-photo" style="background:url('<?=base_url()?>assets/img/1.jpg');background-size: cover;background-position: center;">
                         </div>
                         <span class="profile-name">Novian D Syahrizal</span>
+                        <small>Kepanjen, Alumni 2014</small>
                     </div>
                 </div>
                 <div class="testi-card">
@@ -214,6 +187,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="profile-photo" style="background:url('<?=base_url()?>assets/img/1.jpg');background-size: cover;background-position: center;">
                         </div>
                         <span class="profile-name">Syahrizal D Novian</span>
+                        <small>Kepanjen, Alumni 2014</small>
                     </div>
                 </div>
             </div>
