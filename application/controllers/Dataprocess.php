@@ -111,20 +111,19 @@ class Dataprocess extends CI_Controller {
         redirect(base_url('admin/article'));
     }
     // EDIT ARTIKEL
-    public function editArtikel()
+    public function editArticle()
     {
         // $this->ceklogin();
-        $oldImg = $_POST['old-img'];
+        $oldImg = $_POST['edit-image-old-article'];
         $data = array(
-            'title' => strtolower($_POST['title-input']),
-            'link' => $this->clean($_POST['title-input']),
-            'content' => $_POST['content-editor']
+            'title' => strtolower($_POST['edit-title-article']),
+            'link' => $this->clean($_POST['edit-title-article']),
+            'content' => $_POST['content-article']
         );
         // Jika mengganti gambar depan
-        if(!empty($_FILES['files']['name'])){
-            echo 'haha';
-            $data['image'] = $_FILES['files']['name'];
-            $uploaded = $this->crud->pict('article', 'files');
+        if(!empty($_FILES['edit-image-article']['name'])){
+            $data['image'] = $_FILES['edit-image-article']['name'];
+            $uploaded = $this->crud->pict('article', 'edit-image-article');
             // Jika gambar depan lama bukan blank
             if($oldImg !== 'blank.jpg'){
                 $image = $oldImg;
@@ -134,7 +133,7 @@ class Dataprocess extends CI_Controller {
                 unlink(FCPATH.'assets/img/article/'.$thumb);
             }
         }
-        $update = $this->crud->Update('article', $data, array('id'=>$_POST['id']));
+        $update = $this->crud->Update('article', $data, array('id'=>$_POST['edit-id-article']));
         if($update){
             $this->session->set_flashdata('success', 'Artikel Berhasil Diubah');
         }else{
@@ -147,19 +146,20 @@ class Dataprocess extends CI_Controller {
     {
         // $this->ceklogin();
         $id = $_POST['id'];
+        $group = $_POST['group'];
         $img = $_POST['img'];
-        $delete = $this->crud->Delete('article', array('id' => $id));
+        $delete = $this->crud->Delete($group, array('id' => $id));
         
         if($delete){
             if($img !== 'blank.jpg'){
                 $extension_pos = strrpos($img, '.'); // find position of the last dot, so where the extension starts
                 $thumb = substr($img, 0, $extension_pos) . '_thumb' . substr($img, $extension_pos);
-                unlink(FCPATH.'assets/img/article/'.$img);
-                unlink(FCPATH.'assets/img/article/'.$thumb);
+                unlink(FCPATH.'assets/img/'.$group.'/'.$img);
+                unlink(FCPATH.'assets/img/'.$group.'/'.$thumb);
             }
-            $this->session->set_flashdata('success', 'Artikel Berhasil Dihapus');
+            $this->session->set_flashdata('success', ucfirst($group).' Berhasil Dihapus');
         }else{
-            $this->session->set_flashdata('error', 'Artikel Gagal Dihapus');
+            $this->session->set_flashdata('error', ucfirst($group).' Gagal Dihapus');
         }
         redirect(base_url('admin/article'));
     }
@@ -193,59 +193,40 @@ class Dataprocess extends CI_Controller {
         }
         redirect(base_url('admin/article'));
     }
-    // // EDIT ARTIKEL
-    // public function editArtikel()
-    // {
-    //     // $this->ceklogin();
-    //     $oldImg = $_POST['old-img'];
-    //     $data = array(
-    //         'title' => strtolower($_POST['title-input']),
-    //         'link' => $this->clean($_POST['title-input']),
-    //         'content' => $_POST['content-editor']
-    //     );
-    //     // Jika mengganti gambar depan
-    //     if(!empty($_FILES['files']['name'])){
-    //         echo 'haha';
-    //         $data['image'] = $_FILES['files']['name'];
-    //         $uploaded = $this->crud->pict('article', 'files');
-    //         // Jika gambar depan lama bukan blank
-    //         if($oldImg !== 'blank.jpg'){
-    //             $image = $oldImg;
-    //             $extension_pos = strrpos($image, '.'); // find position of the last dot, so where the extension starts
-    //             $thumb = substr($image, 0, $extension_pos) . '_thumb' . substr($image, $extension_pos);
-    //             unlink(FCPATH.'assets/img/article/'.$image);
-    //             unlink(FCPATH.'assets/img/article/'.$thumb);
-    //         }
-    //     }
-    //     $update = $this->crud->Update('article', $data, array('id'=>$_POST['id']));
-    //     if($update){
-    //         $this->session->set_flashdata('success', 'Artikel Berhasil Diubah');
-    //     }else{
-    //         $this->session->set_flashdata('error', 'Artikel Gagal Diubah');
-    //     }
-    //     redirect(base_url('admin/article'));
-    // }
-    // // DELETE ARTIKEL
-    // public function deleteArticle()
-    // {
-    //     // $this->ceklogin();
-    //     $id = $_POST['id'];
-    //     $img = $_POST['img'];
-    //     $delete = $this->crud->Delete('article', array('id' => $id));
-        
-    //     if($delete){
-    //         if($img !== 'blank.jpg'){
-    //             $extension_pos = strrpos($img, '.'); // find position of the last dot, so where the extension starts
-    //             $thumb = substr($img, 0, $extension_pos) . '_thumb' . substr($img, $extension_pos);
-    //             unlink(FCPATH.'assets/img/article/'.$img);
-    //             unlink(FCPATH.'assets/img/article/'.$thumb);
-    //         }
-    //         $this->session->set_flashdata('success', 'Artikel Berhasil Dihapus');
-    //     }else{
-    //         $this->session->set_flashdata('error', 'Artikel Gagal Dihapus');
-    //     }
-    //     redirect(base_url('admin/article'));
-    // }
+    // EDIT ARTIKEL
+    public function editEvent()
+    {
+        // $this->ceklogin();
+        $oldImg = $_POST['edit-image-old-event'];
+        $data = array(
+            'title' => strtolower($_POST['edit-title-event']),
+            'link' => $this->clean($_POST['edit-title-event']),
+            'startDate' => $_POST['start-date'],
+            'endDate' => $_POST['end-date'],
+            'location' => $_POST['location'],
+            'description' => $_POST['content-event']
+        );
+        // Jika mengganti gambar depan
+        if(!empty($_FILES['edit-image-event']['name'])){
+            $data['image'] = $_FILES['edit-image-event']['name'];
+            $uploaded = $this->crud->pict('event', 'edit-image-event');
+            // Jika gambar depan lama bukan blank
+            if($oldImg !== 'blank.jpg'){
+                $image = $oldImg;
+                $extension_pos = strrpos($image, '.'); // find position of the last dot, so where the extension starts
+                $thumb = substr($image, 0, $extension_pos) . '_thumb' . substr($image, $extension_pos);
+                unlink(FCPATH.'assets/img/event/'.$image);
+                unlink(FCPATH.'assets/img/event/'.$thumb);
+            }
+        }
+        $update = $this->crud->Update('event', $data, array('id'=>$_POST['edit-id-event']));
+        if($update){
+            $this->session->set_flashdata('success', 'Kegiatan Berhasil Diubah');
+        }else{
+            $this->session->set_flashdata('error', 'Kegiatan Gagal Diubah');
+        }
+        redirect(base_url('admin/article'));
+    }
 }
 
 /* End of file Dataprocess.php */

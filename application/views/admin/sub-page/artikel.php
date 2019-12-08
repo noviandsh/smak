@@ -26,7 +26,7 @@
                     $title = ucwords($a['title']);
                     echo "<textarea hidden name='' id='article-".$a['id']."' cols='30' rows='10'>".$a['content']."</textarea><input hidden id='img-article-".$a['id']."'  value='".$a['image']."'/>
                         <tr>
-                            <td>".date("j F, Y - g:i a", strtotime($a['date']))."</td>
+                            <td>".date("j F, Y", strtotime($a['date']))."</td>
                             <td>".$title."</td>
                             <td>
                                 <button class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modal-article' data-title='".$title."' data-id='".$a['id']."' data-menu='view' data-group='article'>
@@ -120,11 +120,11 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-image-article" class="control-label">Gambar Depan</label> 
-                        <button style='display:none' class='cancel-btn btn btn-danger btn-xs'> 
+                        <button style='display:none' class='cancel-btn btn btn-danger btn-xs' group="article"> 
                             <i class='fa fa-times'></i> Cancel
                         </button><br>
                         <img id="image-old-article" src="" alt="" style="max-width: 200px;max-height: 140px;">
-                        <input id="edit-image-article" name="edit-image-article" type='file'/>
+                        <input id="edit-image-article" name="edit-image-article" type='file' group="article"/>
                         <input  type="text" name="edit-image-old-article" id="edit-image-old-article">
                         <small style="color: #9a9a9a;">Max file size 2MB</small>
                     </div>
@@ -143,11 +143,11 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-image-event" class="control-label">Gambar Depan</label> 
-                        <button style='display:none' class='cancel-btn btn btn-danger btn-xs'> 
+                        <button style='display:none' class='cancel-btn btn btn-danger btn-xs' group="event"> 
                             <i class='fa fa-times'></i> Cancel
                         </button><br>
                         <img id="image-old-event" src="" alt="" style="max-width: 200px;max-height: 140px;">
-                        <input id="edit-image-event" name="edit-image-event" type='file'/>
+                        <input id="edit-image-event" name="edit-image-event" type='file' group="event"/>
                         <input  type="text" name="edit-image-old-event" id="edit-image-old-event">
                         <small style="color: #9a9a9a;">Max file size 2MB</small>
                     </div>
@@ -167,16 +167,16 @@
                     </div>
                 </form>
                 <!-- delete article -->
-                <form style="display:none;" action="<?=base_url()?>dataprocess/deletearticle" method="post" id="delete-form">
+                <form style="display:unset;" action="<?=base_url()?>dataprocess/deletearticle" method="post" id="delete-form">
                     <input type="text"  id="delete-id" name="id">
-                    <input type="text"  id="delete-type" name="type">
+                    <input type="text"  id="delete-group" name="group">
                     <input type="text"  id="delete-img" name="img">
                 </form>
             </div>
             <div class="modal-footer">
                 <!-- MODAL FOOTER -->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button style="display:none;" type="button" id="edit-btn" class="btn btn-primary">Save changes</button>
+                <button style="display:none;" type="button" id="edit-btn" class="btn btn-primary" group="">Save changes</button>
                 <button style="display:none;" type="button" id="delete-btn" class="btn btn-danger">Delete</button>
             </div>
         </div>
@@ -217,7 +217,7 @@
 
         if (menu === 'view') 
         {
-            title = 'View | '+title;
+            // View Modal Open
             modal.find('#article-content').html(content);
             modal.find('#article-content').prepend($('<img src="<?=base_url()?>assets/img/'+group+'/'+$('#img-'+group+'-'+id).val()+'"/>').css('max-width','100%'));
         }
@@ -234,18 +234,20 @@
             modal.find('#edit-image-old-'+group).val($('#img-'+group+'-'+id).val());
             firstImg = $('#image-old-'+group).attr('src');
             if(group == 'event'){
-                modal.find('#start-date').val($('#start-date-'+id).val());
-                modal.find('#end-date').val($('#end-date-'+id).val());
+                modal.find('#start-date').val($('#start-date-'+id).val().slice(0, 16));
+                modal.find('#end-date').val($('#end-date-'+id).val().slice(0, 16));
                 modal.find('#location').val($('#event-loc-'+id).val());
             }
+            modal.find('#edit-btn').attr('group', group);
         }
         else
         {
+            // Delete Modal Open
             $('#delete-btn').show();
             title = 'Delete '+title;
-            modal.find('#delet-id').val(id);
-            modal.find('#delete-type').val(del);
-            modal.find('#delete-img').val($('#image-'+id).val());
+            modal.find('#delete-id').val(id);
+            modal.find('#delete-group').val(group);
+            modal.find('#delete-img').val($('#img-'+group+'-'+id).val());
         }
 
         modal.find('#article-title').text(title);
@@ -264,30 +266,32 @@
         $('#delete-btn').hide();
     });
 
-    $('#file-input').on('change', function(){
+    $('#edit-image-event, #edit-image-article').on('change', function(){
+        let group = $(this).attr('group');
         let reader = new FileReader();
         reader.onload = function(e){
-            firstImg = $('#image').attr('src');
-            $('#image').attr('src', e.target.result);
+            firstImg = $('#image-old-'+group).attr('src');
+            $('#image-old-'+group).attr('src', e.target.result);
         }
         try {
             reader.readAsDataURL(this.files[0]);
             $('.cancel-btn').show();
         } catch (error) {
-            $('#image').attr('src', firstImg);
+            $('#image-old-'+group).attr('src', firstImg);
             $('.cancel-btn').hide();
         }
     });
 
     $('.cancel-btn').on('click', function(e){
+        let group = $(this).attr('group');
         e.preventDefault();
-        $('#file-input').val();
-        $('#image').attr('src', firstImg);
+        $('#edit-image-'+group).val('');
+        $('#image-old-'+group).attr('src', firstImg);
         $('.cancel-btn').hide();
     });
     
     $("#edit-btn").click(function(){
-        $('#edit-form').submit();
+        $('#edit-form-'+$(this).attr('group')).submit();
     });
     $("#delete-btn").click(function(){
         $('#delete-form').submit();
