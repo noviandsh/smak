@@ -57,6 +57,17 @@
         </div>
     </div>
     
+    <div id="pagination">
+        <ul class="tsc_pagination">
+            <!-- Show pagination links -->
+            <?php 
+                foreach ($links as $link) {
+                    echo "<li>". $link."</li>";
+                } 
+            ?>
+        </ul>
+    </div>
+    
     <div style="margin-left:10px;">
         <a data-toggle="modal" data-target="#modal-tambah" data-location="gallery" type="button" class="btn btn-primary btn-s">Tambah Gallery</a>
         <a  type="button" class="btn btn-danger btn-s" data-toggle="modal" data-target="#modal-delete"  data-file="semua" data-del="batch" data-location="gallery">Hapus Semua</a>

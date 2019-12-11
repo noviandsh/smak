@@ -65,25 +65,25 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- <img src="<?=base_url('assets/images/').$admin[0]['foto']; ?>" class="user-image" alt="User Image"> -->
-                <!-- <span class="hidden-xs"><?=ucwords($admin[0]['username'])?></span> -->
+                <img src="<?=base_url('assets/img/profile-placeholder.png'); ?>" class="user-image" alt="User Image">
+                <span class="hidden-xs"><?=ucwords($admin[0]['username'])?></span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header">
-                  <!-- <img src="<?=base_url('assets/images/').$admin[0]['foto']; ?>" class="img-circle" alt="User Image"> -->
+                  <img src="<?=base_url('assets/img/profile-placeholder.png'); ?>" class="img-circle" alt="User Image">
 
                   <p>
-                    <!-- <?=ucwords($admin[0]['username'])?> - Admin -->
+                    <?=ucwords($admin[0]['username'])?> - Admin
                   </p>
                 </li>
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a href="<?=base_url('admin/profil')?>" class="btn btn-default btn-flat">Profile</a>
+                    <!-- <a href="<?=base_url('admin/profil')?>" class="btn btn-default btn-flat">Profile</a> -->
                   </div>
                   <div class="pull-right">
-                    <a href="<?=base_url('dataproccess/logout')?>" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="<?=base_url('dataprocess/logout')?>" class="btn btn-default btn-flat">Sign out</a>
                   </div>
                 </li>
               </ul>
@@ -102,7 +102,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
           <div class="pull-left image">
-            <!-- <img src="<?=base_url('assets/images/').$admin[0]['foto']; ?>" class="img-circle" alt="User Image"> -->
+            <img src="<?=base_url('assets/img/profile-placeholder.png'); ?>" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
             <p><?=ucwords($admin[0]['username'])?></p>
@@ -131,23 +131,28 @@
           </li>
 
           <li>
-            <a href="<?=base_url()?>admin/halaman-depan">
-              <i class="fa fa-calculator"></i> <span>Halaman Depan</span>
+            <a href="<?=base_url()?>admin/account">
+              <i class="fa fa-user"></i> <span>Manajemen Akun</span>
             </a>
           </li>
 
           <li>
-            <a href="<?=base_url()?>admin/daftar-mobil">
-              <i class="fa fa-car"></i> <span>Mobil</span>
-            </a>
-          </li>
-
-          <li >
-            <a href="<?=base_url()?>admin/paket-kredit">
-              <i class="fa fa-credit-card"></i> <span>Paket Kredit</span>
+            <a href="<?=base_url()?>admin/testi">
+              <i class="fa fa-comments"></i> <span>Testimoni</span>
             </a>
           </li>
           
+          <li>
+            <a href="<?=base_url()?>admin/testimoni">
+              <i class="fa fa-image"></i> <span>Galeri</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="<?=base_url()?>admin/article">
+              <i class="fa fa-book"></i> <span>Artikel</span>
+            </a>
+          </li>
           <!-- <li>
             <a href="<?=base_url()?>admin/simulasi-kredit">
               <i class="fa fa-usd"></i> <span>Simulasi Kredit</span>
@@ -178,12 +183,6 @@
             </a>
           </li> -->
          
-          <li>
-            <a href="<?=base_url()?>admin/daftar-kontak">
-              <i class="fa fa-address-card"></i> <span>Daftar Kontak</span>
-            </a>
-          </li>
-          
           <!-- <li>
             <a href="<?=base_url()?>admin/inbox">
               <i class="fa fa-envelope"></i> <span>Pesan Masuk</span>
@@ -205,23 +204,6 @@
             </a>
           </li> -->
 
-          <li>
-            <a href="<?=base_url()?>admin/testimoni">
-              <i class="fa fa-thumbs-up"></i> <span>Testimoni</span>
-            </a>
-          </li>
-          
-          <li>
-            <a href="<?=base_url()?>admin/promo">
-              <i class="fa fa-cart-plus"></i> <span>Promo</span>
-            </a>
-          </li>
-          
-          <li>
-            <a href="<?=base_url()?>admin/artikel">
-              <i class="fa fa-book"></i> <span>Artikel</span>
-            </a>
-          </li>
 
          
         </ul>
@@ -240,9 +222,8 @@
           <!-- <small>it all starts here</small> -->
         </h1>
         <!-- <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li><a href="#">Examples</a></li>
-          <li class="active">Blank page</li>
+          <li><a href="#"><i class="fa fa-dashboard"></i> Admin</a></li>
+          <li class="active"><?=$this->uri->segment(2)?></li>
         </ol> -->
       </section>
 

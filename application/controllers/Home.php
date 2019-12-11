@@ -40,6 +40,7 @@ class Home extends CI_Controller {
 	}
 	public function index()
 	{
+		$data['popup'] = $this->crud->GetWhere('article', array('popup'=>true));
 		$data['event'] = $this->crud->Get('event');
 		$n = 0;
 		foreach($data['event'] as $a){
@@ -52,5 +53,9 @@ class Home extends CI_Controller {
 		$data['slider'] = $this->crud->Get('slider');
 		$data['gallery'] = $this->crud->Get('gallery');
 		$this->load->view('home', $data);
+	}
+	public function viewArticle($link)
+	{
+		echo $link;
 	}
 }

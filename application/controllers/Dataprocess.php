@@ -8,7 +8,7 @@ class Dataprocess extends CI_Controller {
         parent::__construct();
         //Do your magic here
         $this->load->helper(array('form', 'file'));
-        $this->load->library('image_lib');
+        $this->load->library(array('image_lib', 'encrypt'));
         $this->load->model('crud');
         date_default_timezone_set('Asia/Jakarta');
     }
@@ -21,21 +21,96 @@ class Dataprocess extends CI_Controller {
 
            return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
     }
+
+    /* 10000071104122
+    | -------------------------------------------------------------------------
+    | LOGIN
+    | -------------------------------------------------------------------------
+    */
+
+    // PROSES LOGOUT
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(base_url('admin'));
+    }
+
+    // PROSES LOGIN
     public function login()
     {
-        $where = array(
-            'username' => $_POST['username'],
-            'password' => $_POST['password']
-        );
-        $data = $this->crud->GetWhere('user', $where);
-        if(count($data) > 0){
-            $this->session->set_userdata('username', $data[0]['username']);
-            redirect(base_url('admin/dashboard'));
+        $user = $_POST['username'];
+        $pass = $_POST['password'];
+        $getUser = $this->crud->GetWhere('user', array('username'=>$user));
+        if(!empty($getUser)){
+            if(password_verify($pass, $getUser[0]['password'])){
+                $this->session->set_userdata('username', $getUser[0]['username']);
+                $this->session->set_userdata('type', $getUser[0]['type']);
+                redirect(base_url('admin/dashboard'));
+            }else{
+                echo "Password Salah";
+            }
         }else{
-            $this->session->set_flashdata('error', 'Incorrect Username or Password');
-            redirect(base_url('admin'));
+            echo "Username Salah";
         }
     }
+
+    // PROSES USERNAME TERSEDIA
+    public function userCheck()
+    {
+        $user = $this->crud->GetCountWhere('user', array('username'=>$_POST['username']));
+        if($user>0){
+            echo "<span style='color:red;font-size: 16px;'> Username Tidak Tersedia.</span>";
+        }else{
+            echo "<span style='color:green;font-size: 16px;'> Username Tersedia.</span>";
+        }
+    }
+
+    // PROSES DAFTAR AKUN BARU
+    public function register()
+    {
+        $user = $_POST['user'];
+        $pass = $this->encrypt->encode($_POST['pass']);
+        $type = $_POST['type'];
+        $regist = $this->crud->Insert('user', array(
+            "username"=>$user,
+            "password"=>$pass,
+            "type"=>$type
+        ));
+        if($regist){
+            $this->session->set_flashdata("regist", "<span style='color:green;font-size: 16px;'> Berhasil mendaftar, silahkan login untuk melanjutkan.</span>");
+        }
+        redirect(base_url('login-page'));
+    }
+    // PROSES GANTI PASSWORD DAN USERNAME
+    public function changePass()
+    {
+        $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $change = $this->crud->Update('user', array(
+            "password"=>$pass
+        ), array('id'=>$_POST['id']));
+        
+        if($change){
+            $this->session->set_flashdata('success', 'Password Berhasil Diubah');
+        }else{
+            $this->session->set_flashdata('error', 'Password Gagal Diubah');
+        }
+        redirect(base_url('admin/account'));
+    }
+    // public function login()
+    // {
+    //     $where = array(
+    //         'username' => $_POST['username'],
+    //         'password' => $_POST['password']
+    //     );
+    //     $data = $this->crud->GetWhere('user', $where);
+    //     if(count($data) > 0){
+    //         $this->session->set_userdata('username', $data[0]['username']);
+    //         redirect(base_url('admin/dashboard'));
+    //     }else{
+    //         $this->session->set_flashdata('error', 'Incorrect Username or Password');
+    //         redirect(base_url('admin'));
+    //     }
+    // }
     /*
     | -------------------------------------------------------------------------
     | BERANDA
@@ -160,6 +235,18 @@ class Dataprocess extends CI_Controller {
             $this->session->set_flashdata('success', ucfirst($group).' Berhasil Dihapus');
         }else{
             $this->session->set_flashdata('error', ucfirst($group).' Gagal Dihapus');
+        }
+        redirect(base_url('admin/article'));
+    }
+    public function setPopup()
+    {
+        $id = $_POST['id'];
+        $removeTrue = $this->crud->Update('article', array('popup'=>false), array('popup'=>true));
+        $addPopup = $this->crud->Update('article', array('popup'=>true), array('id'=>$id));
+        if($addPopup){
+            $this->session->set_flashdata('success', 'Pop-up Berhasil Diubah');
+        }else{
+            $this->session->set_flashdata('error', 'Pop-up Gagal Diubah');
         }
         redirect(base_url('admin/article'));
     }

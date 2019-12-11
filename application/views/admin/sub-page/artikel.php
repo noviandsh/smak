@@ -9,6 +9,20 @@
         
     }
 ?>
+<div class="box box-primary">
+    <div class="box-inner">
+        <h4><b>Pop-Up Pengumuman</b></h4>
+        <?php
+            foreach($article as $a){
+                if($a['popup']==true){
+                    echo $a['content'].
+                        "<div style='display:none;' id='popup-id'>".$a['id']."</div>";
+                }
+                
+            }
+        ?>
+    </div>
+</div>
 <div class="box box-warning">
     <div class="box-inner">
         <h4><b>Berita & Informasi</b></h4>
@@ -24,6 +38,7 @@
             <?php
                 foreach($article as $a){
                     $title = ucwords($a['title']);
+                    $popup = $a['popup']?'success':'light';
                     echo "<textarea hidden name='' id='article-".$a['id']."' cols='30' rows='10'>".$a['content']."</textarea><input hidden id='img-article-".$a['id']."'  value='".$a['image']."'/>
                         <tr>
                             <td>".date("j F, Y", strtotime($a['date']))."</td>
@@ -37,6 +52,9 @@
                                 </button>
                                 <button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#modal-article' data-title='".$title."' data-id='".$a['id']."' data-menu='delete' data-group='article'> 
                                     <i class='fa fa-trash'></i> Hapus
+                                </button>
+                                <button class='btn btn-".$popup." btn-xs' data-toggle='modal' data-target='#modal-article' data-title='".$title."' data-id='".$a['id']."' data-menu='popup' data-group='article'> 
+                                    <i class='fa fa-commenting-o'></i> Pop-Up
                                 </button>
                             </td>
                         </tr>";
@@ -116,7 +134,7 @@
                     <div class="form-group">
                         <label for="edit-title-article" class="control-label">Judul</label>
                         <input type="text" class="form-control" id="edit-title-article" name="edit-title-article">
-                        <input  type="text" name="edit-id-article" id="edit-id-article">
+                        <input hidden type="text" name="edit-id-article" id="edit-id-article">
                     </div>
                     <div class="form-group">
                         <label for="edit-image-article" class="control-label">Gambar Depan</label> 
@@ -125,7 +143,7 @@
                         </button><br>
                         <img id="image-old-article" src="" alt="" style="max-width: 200px;max-height: 140px;">
                         <input id="edit-image-article" name="edit-image-article" type='file' group="article"/>
-                        <input  type="text" name="edit-image-old-article" id="edit-image-old-article">
+                        <input hidden type="text" name="edit-image-old-article" id="edit-image-old-article">
                         <small style="color: #9a9a9a;">Max file size 2MB</small>
                     </div>
                     <div class="form-group">
@@ -139,7 +157,7 @@
                     <div class="form-group">
                         <label for="edit-title-event">Judul Kegiatan</label>
                         <input type="text" name="edit-title-event" class="form-control" id="edit-title-event">
-                        <input  type="text" name="edit-id-event" id="edit-id-event">
+                        <input  type="text" hidden name="edit-id-event" id="edit-id-event">
                     </div>
                     <div class="form-group">
                         <label for="edit-image-event" class="control-label">Gambar Depan</label> 
@@ -148,7 +166,7 @@
                         </button><br>
                         <img id="image-old-event" src="" alt="" style="max-width: 200px;max-height: 140px;">
                         <input id="edit-image-event" name="edit-image-event" type='file' group="event"/>
-                        <input  type="text" name="edit-image-old-event" id="edit-image-old-event">
+                        <input hidden type="text" name="edit-image-old-event" id="edit-image-old-event">
                         <small style="color: #9a9a9a;">Max file size 2MB</small>
                     </div>
                     <div class="form-group">
@@ -167,10 +185,14 @@
                     </div>
                 </form>
                 <!-- delete article -->
-                <form style="display:unset;" action="<?=base_url()?>dataprocess/deletearticle" method="post" id="delete-form">
+                <form style="display:none;" action="<?=base_url()?>dataprocess/deletearticle" method="post" id="delete-form">
                     <input type="text"  id="delete-id" name="id">
                     <input type="text"  id="delete-group" name="group">
                     <input type="text"  id="delete-img" name="img">
+                </form>
+                <!-- delete popup -->
+                <form style="display:unset;" action="<?=base_url()?>dataprocess/setpopup" method="post" id="popup-form">
+                    <input type="text"  id="popup-id" name="id">
                 </form>
             </div>
             <div class="modal-footer">
@@ -178,6 +200,7 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button style="display:none;" type="button" id="edit-btn" class="btn btn-primary" group="">Save changes</button>
                 <button style="display:none;" type="button" id="delete-btn" class="btn btn-danger">Delete</button>
+                <button style="display:none;" type="button" id="popup-btn" class="btn btn-success">Tampilkan</button>
             </div>
         </div>
     </div>
@@ -219,7 +242,7 @@
         {
             // View Modal Open
             modal.find('#article-content').html(content);
-            modal.find('#article-content').prepend($('<img src="<?=base_url()?>assets/img/'+group+'/'+$('#img-'+group+'-'+id).val()+'"/>').css('max-width','100%'));
+            modal.find('#article-content').prepend($('<img src="<?=base_url()?>assets/img/'+group+'/'+$('#img-'+group+'-'+id).val()+'"/><hr/>').css('max-width','100%'));
         }
         else if(menu === 'edit')
         {
@@ -240,18 +263,23 @@
             }
             modal.find('#edit-btn').attr('group', group);
         }
-        else
+        else if(menu === 'delete')
         {
             // Delete Modal Open
             $('#delete-btn').show();
-            title = 'Delete '+title;
+            title = 'Delete | '+title;
             modal.find('#delete-id').val(id);
             modal.find('#delete-group').val(group);
             modal.find('#delete-img').val($('#img-'+group+'-'+id).val());
+            modal.find('#delete-id').val(id);
+        }
+        else{
+            $('#popup-btn').show();
+            title = 'PopUp | '+title;
+            modal.find('#popup-id').val(id);
         }
 
         modal.find('#article-title').text(title);
-        modal.find('#delete-id').val(id);
         $("#delete-btn").click(function(){
             $('#form-delete').submit();
         });
@@ -282,7 +310,7 @@
         }
     });
 
-    $('.cancel-btn').on('click', function(e){
+    $('.cancel-btn').click(function(e){
         let group = $(this).attr('group');
         e.preventDefault();
         $('#edit-image-'+group).val('');
@@ -295,6 +323,9 @@
     });
     $("#delete-btn").click(function(){
         $('#delete-form').submit();
+    });
+    $("#popup-btn").click(function(){
+        $('#popup-form').submit();
     });
     // DATE PICKER FUNCTION
     

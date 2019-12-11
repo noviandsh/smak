@@ -20,6 +20,7 @@ function readMore($str, $char)
     <link rel="stylesheet" type="text/css" media="screen" href="<?=base_url()?>assets/css/slick.css">
     <link rel="stylesheet" type="text/css" media="screen" href="<?=base_url()?>assets/css/slick-theme.css">
     <link rel="stylesheet" type="text/css" media="screen" href="<?=base_url()?>assets/css/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?=base_url()?>assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" media="screen" href="<?=base_url()?>assets/css/main.css">
 </head>
 <body>
@@ -29,9 +30,17 @@ function readMore($str, $char)
             <clipPath id="wave" clipPathUnits="objectBoundingBox">
                 <path class="st0" d="M0,0v1c0,0,.2452-.1,.5-.1s.5,.1,.5,.1V0"/>
             </clipPath>
+            <clipPath id="wave2" clipPathUnits="objectBoundingBox">
+                <path class="st0" d="M0,0v1c0,0,.2452-.0353,.50-.0353c.2547,0,.50,.0353,.50,.0353V0H0z"/>
+            </clipPath>
             <clipPath id="mid" clipPathUnits="objectBoundingBox">
                 <path class="st0" d="M.7486,.0993c-.1037,0-.25-.054-.25-.054S.3507,0,.2486,0S0,.0268,0,.0268v.4338v.08v.4176c0,0,.1476-.0575,.2514-.0575
 	            s.25,.054,.25,.054s.148,.0453,.25,.0453S1,.9732,1,.9732V.5394v-.08V.0418C1,.0418,.8524,.0993,.7486,.0993z"/>
+            </clipPath>
+            <clipPath id="mid2" clipPathUnits="objectBoundingBox">
+                <path class="st0" d="M.7486,.04c-.1037,0-.25-.0207-.25-.0207S.3507,0,.2486,0S0,.0268,0,.0268v.4338v.0282V.51v.0294v.4472
+                    c0,0,.1476-.0278,.2514-.0278s.25,.0207,.25,.0207s.148,.0193,.25,.0193S1,.9721,1,.9721V.5382V.51v-.0212v-.0294V.0122
+                    C1,.0122,.8524,.04,.7486,.04z"/>
             </clipPath>
             <clipPath id="menu" clipPathUnits="objectBoundingBox">
                 <path class="st0" d="M0,.05c0,0,.0782-.0482,.1443,0s.1828,.0163,.2148,.0096s.109-.0297,.1553-.0264s.1024,.0352,.1509,.0286
@@ -92,62 +101,63 @@ function readMore($str, $char)
                     </div>
                 </div>
                 <div id="header-filter">
-                    <a href="#info">
+                    <a href="#">
 
-                        <div id="scroll-arrow" href="#"><i class="fas fa-arrow-down"></i></div>
+                        <div id="scroll-arrow"><i class="fas fa-arrow-down"></i></div>
                     </a>
                 </div>
             </div>
         </div>
         <div id="info">
-            <div id="gallery-box">
-                <?php 
-                    foreach($gallery as $gal){
-                        echo "<a href='".base_url()."assets/img/gallery/".$gal['file']."'><div class='gallery-item' style='background:url(".base_url()."assets/img/gallery/".$gal['file'].");background-size:cover;background-position:center;'>
-                            </div></a>";
+            <div id="news">
+                <span class="content-title">Berita & Informasi Terbaru</span><br><br>
+                <?php
+                    foreach($article as $a){
+                        echo "<div class='news-item'>
+                                <img src='".base_url('assets/img/article/'.$a['image'])."' alt=''>
+                                <div class='desc'>
+                                    <h4><a href='".base_url('article/'.$a['link'])."'>".ucwords($a['title'])."</a></h4>
+                                    <span>".date("j F Y", strtotime($a['date']))."</span>
+                                    <div>".readMore($a['content'], 200)."...</div>
+                                </div>
+                            </div>";
                     }
                 ?>
+            </div>
+            <div id="agenda">
+                <span class="content-title">Info Kegiatan</span><br><br>
+                <?php
+                    $month = array('01' => 'JAN','02' => 'FEB','03' => 'MAR','04' => 'APR','05' => 'MEI','06' => 'JUN','07' => 'JUL','08' => 'AUG','09' => 'SEP','10' => 'OKT','11' => 'NOV','12' => 'DEC');
+                    foreach($event as $e){
+                        echo "<div class='agenda-item'>
+                                <div class='calendar'>
+                                    <div class='month'>".$month[$e['startDate']['month']]."</div>
+                                    <div class='date'>".$e['startDate']['date']."</div>
+                                </div>
+                                <div class='desc'>
+                                    <h4><a href='#'>".ucwords($e['title'])."</a></h4>
+                                    <span><i class='fas fa-map-marker-alt'></i> ".ucfirst($e['location'])."</span>
+                                    <div>".readMore($e['description'], 200)."...</div>
+                                </div>
+                            </div>";
+                    }
+                ?>
+                
             </div>
         </div>
         <div id="content">
             <div id="content-clip">
                 <div id="content-filter">
-                    <div id="news">
-                        <span class="content-title">Berita & Informasi Terbaru</span><br><br>
-                        <?php
-                            foreach($article as $a){
-                                echo "<div class='news-item'>
-                                        <img src='".base_url('assets/img/article/'.$a['image'])."' alt=''>
-                                        <div class='desc'>
-                                            <h2><a href='".base_url($a['link'])."'>".ucwords($a['title'])."</a></h2>
-                                            <span>".date("j F Y", strtotime($a['date']))."</span>
-                                            <div>".readMore($a['content'], 200)." ...</div>
-                                        </div>
-                                    </div>";
-                            }
-                        ?>
-                    </div>
-                    <div id="agenda">
-                        <span class="content-title">Info Kegiatan</span><br><br>
-                        <?php
-                            $month = array('01' => 'JAN','02' => 'FEB','03' => 'MAR','04' => 'APR','05' => 'MEI','06' => 'JUN','07' => 'JUL','08' => 'AUG','09' => 'SEP','10' => 'OKT','11' => 'NOV','12' => 'DEC');
-                            foreach($event as $e){
-                                echo "<div class='agenda-item'>
-                                        <div class='calendar'>
-                                            <div class='month'>".$month[$e['startDate']['month']]."</div>
-                                            <div class='date'>".$e['startDate']['date']."</div>
-                                        </div>
-                                        <div class='desc'>
-                                            <h2><a href='#'>".ucwords($e['title'])."</a></h2>
-                                            <span><i class='fas fa-map-marker-alt'></i> ".ucfirst($e['location'])."</span>
-                                            <div>".readMore($e['description'], 200)." ...</div>
-                                        </div>
-                                    </div>";
-                            }
-                        ?>
-                        
-                    </div>
-                    </div>
+                    
+                        <div id="gallery-box">
+                            <?php 
+                                foreach($gallery as $gal){
+                                    echo "<a href='".base_url()."assets/img/gallery/".$gal['file']."'><div class='gallery-item' style='background:url(".base_url()."assets/img/gallery/".$gal['file'].");background-size:cover;background-position:center;'>
+                                        </div></a>";
+                                }
+                            ?>
+                        </div>
+                    <!-- </div> -->
                 </div>
             </div>
             <div id="testi">
@@ -200,12 +210,36 @@ function readMore($str, $char)
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-news" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- MODAL HEADER -->
+                    <h4 class="modal-title" id="myModalLabel"><?=$popup[0]['title']?></h4>
+                    <input hidden type="text">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <!-- MODAL BODY -->
+                    <!-- view article -->
+                    <div id="news-content">
+                        <?=$popup[0]['content']?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL -->
+    <script>
+        var popup = <?=count($popup)?>;
+    </script>
 	<script src="<?=base_url()?>assets/js/jquery.min.js"></script>
     <script src="<?=base_url()?>assets/js/jquery-ui.min.js"></script>
     <script src="<?=base_url()?>assets/js/TweenMax.js"></script>
     <script src="<?=base_url()?>assets/js/TimelineMax.js"></script>
     <script src="<?=base_url()?>assets/js/slick.min.js"></script>
     <script src="<?=base_url()?>assets/js/jquery.magnific-popup.js"></script>
+    <script src="<?=base_url()?>assets/js/bootstrap.js"></script>
     <script src="<?=base_url()?>assets/js/main.js"></script>
 </body>
 </html>

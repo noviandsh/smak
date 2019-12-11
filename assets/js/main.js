@@ -1,9 +1,16 @@
+
+$(document).ready(function(){ 
+    if(popup>0){
+        $('#modal-news').modal('show')
+    }
+});
+
 // SMOOTH SCROLL
 $(document).on('click', 'a[href^="#"]', function (event) {
     event.preventDefault();
-
+    console.log($('#header-shadow')[0].scrollHeight);
     $('html, body').animate({
-        scrollTop: $($.attr(this, 'href')).offset().top
+        scrollTop: $('#header-shadow').height()
     }, {
         duration: 1000, 
         specialEasing: {
@@ -37,8 +44,10 @@ tl.to("#header-filter:before", 2, {
 $(window).scroll(function () {
     if ($(this).scrollTop()  <= 0 ){
         $("#navbar").removeClass('not-top');
+        $("#header-shadow").css('margin-top', '210px');
     }else{
         $("#navbar").addClass('not-top');
+        $("#header-shadow").css('margin-top', '70px');
         // $("#school-info").slideUp();
     }
 });
@@ -150,7 +159,7 @@ $("#testi").slick({
 });
 $("#gallery-box").slick({
     centerPadding: '60px',
-    slidesToShow: 5,
+    slidesToShow: 6,
     // autoplay: true,
     arrows: false,
     // autoplaySpeed: 3000,

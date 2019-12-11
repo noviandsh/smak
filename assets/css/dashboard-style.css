@@ -259,6 +259,11 @@ ul.tsc_pagination li a.current
 .modal-body{
     overflow: auto !important;
 }
+.box-inner img, #article-content img{
+    max-width: 100%;
+    width: unset !important;
+    height: unset !important;
+}
 @media all and (max-width:1024px){
     #testimoni-container{
         grid-template-columns: repeat(4, auto);
