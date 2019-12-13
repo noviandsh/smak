@@ -59,27 +59,28 @@ class Dataprocess extends CI_Controller {
     {
         $user = $this->crud->GetCountWhere('user', array('username'=>$_POST['username']));
         if($user>0){
-            echo "<span style='color:red;font-size: 16px;'> Username Tidak Tersedia.</span>";
+            echo "<span class='label label-danger'>Username tidak tersedia</span>";
         }else{
-            echo "<span style='color:green;font-size: 16px;'> Username Tersedia.</span>";
+            echo "<span class='label label-success'>Username tersedia</span>";
         }
     }
 
     // PROSES DAFTAR AKUN BARU
-    public function register()
+    public function addAccount()
     {
-        $user = $_POST['user'];
-        $pass = $this->encrypt->encode($_POST['pass']);
-        $type = $_POST['type'];
+        $user = $_POST['username'];
+        $pass = password_hash($_POST['passwoord'], PASSWORD_DEFAULT);
         $regist = $this->crud->Insert('user', array(
             "username"=>$user,
-            "password"=>$pass,
-            "type"=>$type
+            "password"=>$pass
         ));
+        
         if($regist){
-            $this->session->set_flashdata("regist", "<span style='color:green;font-size: 16px;'> Berhasil mendaftar, silahkan login untuk melanjutkan.</span>");
+            $this->session->set_flashdata('success', 'Akun berhasil ditambahkan');
+        }else{
+            $this->session->set_flashdata('error', 'Akun gagal ditambahkan');
         }
-        redirect(base_url('login-page'));
+        redirect(base_url('admin/account'));
     }
     // PROSES GANTI PASSWORD DAN USERNAME
     public function changePass()
@@ -90,9 +91,9 @@ class Dataprocess extends CI_Controller {
         ), array('id'=>$_POST['id']));
         
         if($change){
-            $this->session->set_flashdata('success', 'Password Berhasil Diubah');
+            $this->session->set_flashdata('success', 'Password berhasil diubah');
         }else{
-            $this->session->set_flashdata('error', 'Password Gagal Diubah');
+            $this->session->set_flashdata('error', 'Password gagal diubah');
         }
         redirect(base_url('admin/account'));
     }
@@ -250,6 +251,16 @@ class Dataprocess extends CI_Controller {
         }
         redirect(base_url('admin/article'));
     }
+    public function removePopup()
+    {
+        $removeTrue = $this->crud->Update('article', array('popup'=>false), array('popup'=>true));
+        if($removeTrue){
+            $this->session->set_flashdata('success', 'Pop-up berhasil dihapus');
+        }else{
+            $this->session->set_flashdata('error', 'Pop-up gagal dihapus');
+        }
+        redirect(base_url('admin/article'));
+    }
     /*
     | -------------------------------------------------------------------------
     | EVENT
@@ -351,7 +362,7 @@ class Dataprocess extends CI_Controller {
         $oldImg = $_POST['image-old'];
         $data = array(
             'name' => strtolower($_POST['name']),
-            'year' => $this->clean($_POST['year']),
+            'year' => $_POST['year'],
             'home' => $_POST['home'],
             'testimoni' => $_POST['testi']
         );
@@ -396,6 +407,86 @@ class Dataprocess extends CI_Controller {
             $this->session->set_flashdata('error', 'Testimoni Gagal Dihapus');
         }
         redirect(base_url('admin/testi'));
+    }
+    /*
+    | -------------------------------------------------------------------------
+    | PERSON
+    | -------------------------------------------------------------------------
+    */
+    // TAMBAH PERSON
+    public function addPerson()
+    {
+        // $this->ceklogin();
+        
+        $data = array(
+            'name' => $_POST['name'],
+            'nip' => $_POST['nip'],
+            'position' => $_POST['position']
+        );
+        
+        $uploaded = $this->crud->pict('person', 'image');
+        if ($uploaded['status'] == 1) {
+            $data['photo'] = $this->upload->data('file_name');
+        }
+        $insert = $this->crud->Insert('structure', $data);
+        if($insert){
+            $this->session->set_flashdata('success', 'Struktur organisasi berhasil ditambahkan');
+        }else{
+            $this->session->set_flashdata('error', 'Struktur organisasi gagal ditambahkan');
+        }
+        redirect(base_url('admin/structure'));
+    }
+    // EDIT TESTI
+    public function editPerson()
+    {
+        // $this->ceklogin();
+        $oldImg = $_POST['image-old'];
+        $data = array(
+            'name' => $_POST['name'],
+            'nip' => $_POST['nip'],
+            'position' => $_POST['position']
+        );
+        // Jika mengganti gambar depan
+        if(!empty($_FILES['image']['name'])){
+            $data['photo'] = $_FILES['image']['name'];
+            $uploaded = $this->crud->pict('person', 'image');
+            // Jika gambar depan lama bukan blank
+            if($oldImg !== 'blank.jpg'){
+                $image = $oldImg;
+                $extension_pos = strrpos($image, '.'); // find position of the last dot, so where the extension starts
+                $thumb = substr($image, 0, $extension_pos) . '_thumb' . substr($image, $extension_pos);
+                unlink(FCPATH.'assets/img/person/'.$image);
+                unlink(FCPATH.'assets/img/person/'.$thumb);
+            }
+        }
+        $update = $this->crud->Update('structure', $data, array('id'=>$_POST['id']));
+        if($update){
+            $this->session->set_flashdata('success', 'Berhasil diubah');
+        }else{
+            $this->session->set_flashdata('error', 'Gagal diubah');
+        }
+        redirect(base_url('admin/structure'));
+    }
+    // DELETE TESTI
+    public function deletePerson()
+    {
+        // $this->ceklogin();
+        $id = $_POST['id'];
+        $img = $_POST['img'];
+        $delete = $this->crud->Delete('structure', array('id' => $id));
+        
+        if($delete){
+            if($img !== 'blank.jpg'){
+                $extension_pos = strrpos($img, '.'); // find position of the last dot, so where the extension starts
+                $thumb = substr($img, 0, $extension_pos) . '_thumb' . substr($img, $extension_pos);
+                unlink(FCPATH.'assets/img/person/'.$img);
+                unlink(FCPATH.'assets/img/person/'.$thumb);
+            }
+            $this->session->set_flashdata('success', 'Struktur organisasi berhasil dihapus');
+        }else{
+            $this->session->set_flashdata('error', 'Struktur organisasi gagal dihapus');
+        }
+        redirect(base_url('admin/structure'));
     }
 }
 

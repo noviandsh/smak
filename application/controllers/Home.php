@@ -40,6 +40,11 @@ class Home extends CI_Controller {
 	}
 	public function index()
 	{
+		$data['navbar'] = $this->load->view('components/comp-navbar', '', TRUE);
+		$data['footer'] = $this->load->view('components/comp-footer', '', TRUE);
+		$data['head'] = $this->load->view('components/comp-head', '', TRUE);
+		$data['svg'] = $this->load->view('components/comp-svg', '', TRUE);
+		
 		$data['popup'] = $this->crud->GetWhere('article', array('popup'=>true));
 		$data['event'] = $this->crud->Get('event');
 		$n = 0;
@@ -56,6 +61,13 @@ class Home extends CI_Controller {
 	}
 	public function viewArticle($link)
 	{
-		echo $link;
+		$type = $this->uri->segment(1);
+		
+		$data['navbar'] = $this->load->view('components/comp-navbar', '', TRUE);
+		$data['footer'] = $this->load->view('components/comp-footer', '', TRUE);
+		$data['head'] = $this->load->view('components/comp-head', '', TRUE);
+		$data['svg'] = $this->load->view('components/comp-svg', '', TRUE);
+		$data['content'] = $this->crud->GetWhere($type, array('link'=>$link));
+		$this->load->view('article', $data);
 	}
 }

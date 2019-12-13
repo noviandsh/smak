@@ -44,10 +44,10 @@ tl.to("#header-filter:before", 2, {
 $(window).scroll(function () {
     if ($(this).scrollTop()  <= 0 ){
         $("#navbar").removeClass('not-top');
-        $("#header-shadow").css('margin-top', '210px');
+        // $("#header-shadow").css('margin-top', '210px');
     }else{
         $("#navbar").addClass('not-top');
-        $("#header-shadow").css('margin-top', '70px');
+        // $("#header-shadow").css('margin-top', '70px');
         // $("#school-info").slideUp();
     }
 });

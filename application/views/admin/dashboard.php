@@ -129,10 +129,18 @@
               <i class="fa fa-home"></i> <span>Beranda</span>
             </a>
           </li>
-
+          <?php 
+          if($this->session->type == 0){
+            echo "<li>
+                    <a href='".base_url()."admin/account'>
+                      <i class='fa fa-user'></i> <span>Manajemen Akun</span>
+                    </a>
+                  </li>";
+          }
+          ?>
           <li>
-            <a href="<?=base_url()?>admin/account">
-              <i class="fa fa-user"></i> <span>Manajemen Akun</span>
+            <a href="<?=base_url()?>admin/structure">
+              <i class="fa fa-users"></i> <span>Struktur organisasi</span>
             </a>
           </li>
 
@@ -142,11 +150,11 @@
             </a>
           </li>
           
-          <li>
+          <!-- <li>
             <a href="<?=base_url()?>admin/testimoni">
               <i class="fa fa-image"></i> <span>Galeri</span>
             </a>
-          </li>
+          </li> -->
 
           <li>
             <a href="<?=base_url()?>admin/article">

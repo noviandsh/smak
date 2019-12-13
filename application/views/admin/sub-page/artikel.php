@@ -6,24 +6,34 @@
     }
     function dateSplit($date){
         $dates = explode(" ", $date);
-        
+    }
+    if($this->uri->segment(4)==1){
+        redirect(base_url('admin/article'));
     }
 ?>
 <div class="box box-primary">
     <div class="box-inner">
         <h4><b>Pop-Up Pengumuman</b></h4>
         <?php
-            foreach($article as $a){
-                if($a['popup']==true){
-                    echo $a['content'].
-                        "<div style='display:none;' id='popup-id'>".$a['id']."</div>";
-                }
-                
+            if(!empty($popup)){
+                echo $popup[0]['content'].
+                    "<div style='display:none;' id='popup-id'>".$popup[0]['id']."</div>";
             }
         ?>
     </div>
+    <div style="margin-left:10px;">
+        <?php
+            if(!empty($popup)){
+                echo "<a href='".base_url()."dataprocess/removepopup' type='button' class='btn btn-danger btn-s'>Hapus Pop-up</a>";
+            }
+        ?>
+    </div><br>
 </div>
-<div class="box box-warning">
+
+<?php 
+if($this->uri->segment(3) !== 'event'){
+?>
+<div class="box box-warning" id="box-news">
     <div class="box-inner">
         <h4><b>Berita & Informasi</b></h4>
         <table class="table table-hover">
@@ -64,11 +74,27 @@
         </table>
     </div>
     
+    
+    <div id="pagination">
+        <ul class="tsc_pagination">
+            <!-- Show pagination links -->
+            <?php 
+                foreach ($links as $link) {
+                    echo "<li>". $link."</li>";
+                } 
+            ?>
+        </ul>
+    </div>
+
     <div style="margin-left:10px;">
         <a href="<?=base_url()?>admin/newarticle" type="button" class="btn btn-primary btn-s">Tambah Berita & Informasi</a>
     </div><br>
 </div>
-<div class="box box-danger">
+<?php 
+}
+if ($this->uri->segment(3)!=='info') {
+?>
+<div class="box box-danger" id="box-event">
     <div class="box-inner">
         <h4><b>Kegiatan</b></h4>
         <table class="table table-hover">
@@ -109,10 +135,22 @@
         </table>
     </div>
     
+    <div id="pagination">
+        <ul class="tsc_pagination">
+            <!-- Show pagination links -->
+            <?php 
+                foreach ($links2 as $link) {
+                    echo "<li>". $link."</li>";
+                } 
+            ?>
+        </ul>
+    </div>
+
     <div style="margin-left:10px;">
         <a href="<?=base_url()?>admin/newevent" type="button" class="btn btn-primary btn-s">Tambah Kegiatan</a>
     </div><br>
 </div>
+<?php } ?>
 <!-- MODAL -->
 <div class="modal fade" id="modal-article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
