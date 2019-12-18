@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,600,700,800&display=swap');
 *{
     box-sizing: border-box;
     /* outline: 1px solid red; */
@@ -11,12 +12,22 @@ html, body{
 }
 body{
     position: relative;
-    padding-bottom: 200px;
+    /* padding-bottom: 200px; */
     background: white;
+}
+.patok{
+    position: absolute;
+    display: block;
+    height: 20px;
+    right: 0;
+    z-index: 99999;
+    width: 60px;
+    border-bottom: 3px solid black;
 }
 #container{
     /* max-width: 1366px; */
     margin: 0 auto;
+    overflow-x: hidden;
 }
 #svg-wave{
     position: absolute;
@@ -64,6 +75,9 @@ body{
     font-style: normal;
     text-decoration: none;
     margin-top: 10px;
+}
+#school-name>div{
+    margin-bottom: -10px;
 }
 #school-name>small{
     font-size: 13px;
@@ -299,10 +313,10 @@ body{
 }
 #info{
     width: 100%;
-    padding: 20px;
+    padding: 100px;
     display: grid;
     grid-template-columns: auto auto;
-    grid-column-gap: 20px;
+    grid-column-gap: 100px;
     grid-row-gap: 20px;
 }
 #content{
@@ -310,7 +324,7 @@ body{
 }
 #content-clip{
     clip-path: url("#mid");
-    height: 540px;
+    /* height: 540px; */
     width: 100%;
     background: url('../img/student.jpg');
     background-size: cover;
@@ -319,12 +333,12 @@ body{
     background-blend-mode: color;
 }
 #content-filter{
-    padding: 100px 0px;;
+    padding: 200px 100px;
     width: 100%;
     height: 100%;
     background: rgba(33, 147, 176, 0.9);
-    background: -webkit-linear-gradient(to right, rgba(109, 213, 237, 0.9), rgba(33, 147, 176, 0.9));  
-    background: linear-gradient(to right, rgba(109, 213, 237, 0.9), rgba(33, 147, 176, 0.9)); 
+    background: -webkit-linear-gradient(90deg, rgba(109,213,237,0.9) 15%, rgba(56,186,215,0.95) 21%, rgba(33,147,176,1) 35%); 
+    background: linear-gradient(90deg, rgba(109,213,237,0.9) 15%, rgba(56,186,215,0.95) 21%, rgba(33,147,176,1) 35%)
 }
 #news-content img{
     max-width: 100%;
@@ -360,22 +374,41 @@ body{
 .content-title{
     font-size: 30px;
     /* margin: 20px; */
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Raleway', sans-serif;
+    color: #2293b0;
 }
 #news{
     font-family: 'Source Sans Pro', sans-serif;
 }
 .news-item{
-    background-color: rgb(237, 237, 237);
-    border-bottom: .5px solid #eee;
+    /* background-color: rgb(237, 237, 237); */
+    border: 1px solid #eee;
     display: grid;
-    grid-template-columns: 150px auto;
-    grid-column-gap: 20px;
-    padding: 20px;
+    grid-template-columns: 182px auto;
+    /* grid-column-gap: 30px; */
+    /* padding: 20px; */
     border-radius: 5px;
+    margin-bottom: 20px;
 }
 .news-item img{
-    max-width: 150px;
+    max-width: 160px;
+    margin: 10px;
+}
+.news-item .date{
+    padding: 0 20px;
+    font-size: 13px;
+    position: relative;
+}
+.news-item .date>div{
+    border-bottom: 1px solid #979797;
+    background: black;
+    margin-bottom: -10.5px;
+    margin-left: -20px;
+}
+.news-item .date>span{
+    background: #eee;
+    padding: 0 5px;
+    color: #979797;
 }
 #agenda{
     /* display: grid;
@@ -396,17 +429,40 @@ body{
 .desc{
     font-family: 'Source Sans Pro', sans-serif;
 }
+.news-item>.desc{
+    background: #eee;
+    padding: 20px;
+    margin-left: 20px;
+    position: relative;
+}
+.news-item>.desc:before{
+    content: '';
+    display: block;
+    border-right: 20px solid #eee;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    position: absolute;
+    top: 16px;
+    left: -19px;
+}
 .desc>h4{
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     font-weight: 100;
 }
+.agenda-item .desc>h4{
+    margin-bottom: -3px;
+}
 .desc>h4>a{
-    color: black;
+    color: #2293b0;
     text-decoration: none;
 }
 .desc>span{
+    color: #979797;
     font-size: 14px;
+}
+.desc>span>i{
+    font-size: 11px;
 }
 .calendar{
     width: 100px;
@@ -424,23 +480,23 @@ body{
     content: "";
     display: block;
     width: 10px; height: 10px;
-    background: #252525;
+    background: #eee;
     border-radius: 50%;
     position: absolute;
     top: 5px; left: 10px;
-    box-shadow: 70px 0px 0px 0px #252525;
+    box-shadow: 70px 0px 0px 0px #eee;
 }
 .calendar .month:after{
     content: "";
     display: block;
     width: 4px;
     height: 18px;
-    background: #e8e8e8;
+    background: #505050;
     border-radius: 7px;
     position: absolute;
     top: -7px;
-    left: 12.5px;
-    box-shadow: 69.4px 0px 0px 0px #e8e8e8;
+    left: 12.6px;
+    box-shadow: 70.1px 0px 0px 0px #505050;
 }
 .calendar .date{
     background: white;
@@ -541,7 +597,7 @@ body{
     color: white;
     font-family: 'Open Sans', sans-serif;
     width: 100%;
-    height: 200px;
+    height: 40px;
     background-color: #252525;
     position: absolute;
     bottom: 0;
@@ -580,6 +636,25 @@ body{
 #side-content{
     padding: 10px;
 }
+/*
+| -------------------------------------------------------------------------
+| Headmaster style
+| -------------------------------------------------------------------------
+*/
+#headmaster-box{
+    display: grid;
+    grid-template-columns: 400px auto;
+}
+#headmaster-profile{
+}
+#headmaster-profile .photo{
+    height: 240px;
+    width: 240px;
+    border-radius: 50%;
+}
+#headmaster-speech{
+    color: white;
+}
 
 /* MEDIA QUERIES */
 @media all and (min-width: 1024px) and (max-width: 1280px) { 
@@ -610,6 +685,9 @@ body{
     #content-filter{
         /* grid-template-columns: auto auto; */
     }
+    #info{
+        grid-template-columns: auto;
+    }
 }
 
 @media all and (min-width: 480px) and (max-width: 768px) { 
@@ -618,6 +696,9 @@ body{
     }
     #school-info{
         display: none;
+    }
+    #content-clip{
+        clip-path: url("#mid2");
     }
     #menubar{
         width: 440px;
@@ -672,8 +753,13 @@ body{
     }
     #content-filter{
         /* grid-template-columns: auto; */
+        padding: 100px 50px;
     }
     #info{
+        grid-template-columns: auto;
+        padding: 50px;
+    }
+    #headmaster-box{
         grid-template-columns: auto;
     }
 }
@@ -684,6 +770,9 @@ body{
     }
     #school-name{
         font-size: 5vw;
+    }
+    #content-clip{
+        clip-path: url("#mid2");
     }
     #logo>img{
         max-width: 22vw;
@@ -750,6 +839,32 @@ body{
         height: 440px;
     }
     #content-filter{
+        padding: 100px 10px;
+    }
+    #info{
+        grid-template-columns: auto;
+        padding: 50px 10px;
+    }
+    .news-item{
+        grid-template-columns: auto;
+    }
+    .news-item img{
+        max-width: calc(100% - 10px);
+        margin: 5px;
+    }
+    .news-item>.desc{
+        margin-left: 0;
+        margin-top: 30px;
+    }
+    .news-item>.desc:before{
+        border-top: 0;
+        border-bottom: 20px solid #eee;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        top: -20px;
+        left: calc(50% - 20px);
+    }
+    #headmaster-box{
         grid-template-columns: auto;
     }
 }

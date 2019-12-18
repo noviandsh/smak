@@ -2,7 +2,7 @@
     <div id="logo">
         <img src="<?=base_url()?>assets/img/logo.png" alt="" srcset=""> 
         <div id="school-name">
-            <span>SMAK YOS SUDARSO BATU</span><br>
+            <div>SMAK YOS SUDARSO BATU</div>
             <small>JL. PANGLIMA SUDIRMAN NO. 63</small>
         </div>
     </div>
@@ -14,11 +14,11 @@
     </div>
     <div id="menubar">
         <ul>
-            <li id="menu-one"><a href="">Beranda</a></li>
-            <li id="menu-two"><a href="">Profil</a></li>
-            <li id="menu-three"><a href="">Ekstra</a></li>
-            <li id="menu-four"><a href="">Alumni</a></li>
-            <li id="menu-five"><a href="">Kontak</a></li>
+            <li id="menu-one"><a href="#header">Beranda</a></li>
+            <li id="menu-two"><a href="#info">Jajaran</a></li>
+            <li id="menu-three"><a href="#content">Ekstra</a></li>
+            <li id="menu-four"><a href="#testi">Alumni</a></li>
+            <li id="menu-five"><a href="#gallery">Kontak</a></li>
             <div></div>
         </ul>
     </div>

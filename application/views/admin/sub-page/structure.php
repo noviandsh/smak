@@ -169,6 +169,7 @@
     });
 
     $('#image').on('change', function(){
+        console.log(this.files[0].size);
         let reader = new FileReader();
         reader.onload = function(e){
             $('#image-old-preview').attr('src', e.target.result);

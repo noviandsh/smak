@@ -72,7 +72,7 @@ class Crud extends CI_Model {
     public function pict($path, $input){
         $config['upload_path']          = './assets/img/'.$path;
         $config['allowed_types']        = 'jpg|png|jpeg';
-		$config['max_size']	= '2048';
+		// $config['max_size']	= '2048';
 		$config['remove_space'] = TRUE;
 
         $this->load->library('upload', $config);

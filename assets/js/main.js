@@ -1,23 +1,89 @@
 
 $(document).ready(function(){ 
+    let menu = {
+        header: 0,
+        info: 20,
+        content: 40,
+        testi: 60,
+        gallery: 80
+    };
+    $('.section').each(function eachElement(){
+        let $this = $(this);
+        let position = $this.position();
+        let end = position.top + $this.height();
+        let id = $this.attr('id');
+        // $('body').append('<div class="patok" style="top:'+position.top+'px">in '+id+'</div>');
+        // $('body').append('<div class="patok" style="top:'+end+'px">out '+id+'</div>');
+        $('#info').scrollspy({
+            min: position.top - 105,
+            max: position.top + $this.height(),
+            onEnter: function(element, position) {
+                // $nav.addClass('fixed');
+                $('#menubar div').css('margin-left', menu[id]+'%');
+                console.log('masuk '+id);
+                // console.log($this);
+                // console.log(id);
+                // console.log(position);
+            },
+            onLeave: function(element, position) {
+                // $('#navbar').css('position', 'fixed');
+                console.log('keluar '+id);
+            }
+        });
+    });
     if(popup>0){
         $('#modal-news').modal('show')
     }
 });
 
-// SMOOTH SCROLL
-$(document).on('click', 'a[href^="#"]', function (event) {
-    event.preventDefault();
-    console.log($('#header-shadow')[0].scrollHeight);
-    $('html, body').animate({
-        scrollTop: $('#header-shadow').height()
-    }, {
-        duration: 1000, 
-        specialEasing: {
-            scrollTop: "easeOutCirc"
-        }
-    });
-});
+// // SMOOTH SCROLL
+// $(document).on('click', 'a[href^="#"]', function (event) {
+//     event.preventDefault();
+//     console.log($('#header-shadow')[0].scrollHeight);
+//     $('html, body').animate({
+//         scrollTop: $('#header-shadow').height()
+//     }, {
+//         duration: 1000, 
+//         specialEasing: {
+//             scrollTop: "easeOutCirc"
+//         }
+//     });
+// });
+$('a[href*="#"]')
+  // Remove links that don't actually link to anything
+  .not('[href="#"]')
+  .not('[href="#0"]')
+  .click(function(event) {
+    // On-page links
+    if (
+      location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+      && 
+      location.hostname == this.hostname
+    ) {
+      // Figure out element to scroll to
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      // Does a scroll target exist?
+      if (target.length) {
+        // Only prevent default if animation is actually gonna happen
+        event.preventDefault();
+        $('html, body').animate({
+          scrollTop: target.offset().top - 100
+        }, 1000, function() {
+          // Callback after animation
+          // Must change focus!
+          var $target = $(target);
+          $target.focus();
+          if ($target.is(":focus")) { // Checking if the target was focused
+            return false;
+          } else {
+            $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+            $target.focus(); // Set focus again
+          };
+        });
+      }
+    }
+  });
 
 // NAVBAR
 let tl = new TimelineMax({repeat: -1});
@@ -42,7 +108,7 @@ tl.to("#header-filter:before", 2, {
 });
 
 $(window).scroll(function () {
-    if ($(this).scrollTop()  <= 0 ){
+    if ($(this).scrollTop()  <= 210 ){
         $("#navbar").removeClass('not-top');
         // $("#header-shadow").css('margin-top', '210px');
     }else{
