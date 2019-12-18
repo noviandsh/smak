@@ -21,6 +21,16 @@ class Dataprocess extends CI_Controller {
 
            return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
     }
+    public function activityLog($type, $activity)
+    {
+        $data = array(
+            'username' => $this->session->username,
+            'date' => date("Y-m-d h:i:s"),
+            'type' => $type,
+            'activity' => $activity
+        );
+        $this->crud->Insert('user_log', $data);
+    }
 
     /* 10000071104122
     | -------------------------------------------------------------------------
@@ -31,6 +41,10 @@ class Dataprocess extends CI_Controller {
     // PROSES LOGOUT
     public function logout()
     {
+        $this->activityLog(
+            'logout',
+            'telah logout dari sistem'
+        );
         $this->session->sess_destroy();
         redirect(base_url('admin'));
     }
@@ -45,6 +59,10 @@ class Dataprocess extends CI_Controller {
             if(password_verify($pass, $getUser[0]['password'])){
                 $this->session->set_userdata('username', $getUser[0]['username']);
                 $this->session->set_userdata('type', $getUser[0]['type']);
+                $this->activityLog(
+                    'login',
+                    'telah login kedalam sistem'
+                );
                 redirect(base_url('admin/dashboard'));
             }else{
                 echo "Password Salah";
@@ -76,6 +94,10 @@ class Dataprocess extends CI_Controller {
         ));
         
         if($regist){
+            $this->activityLog(
+                'tambah akun',
+                'menambahkan akun '.$user.' ke sistem'
+            );
             $this->session->set_flashdata('success', 'Akun berhasil ditambahkan');
         }else{
             $this->session->set_flashdata('error', 'Akun gagal ditambahkan');
@@ -83,35 +105,49 @@ class Dataprocess extends CI_Controller {
         redirect(base_url('admin/account'));
     }
     // PROSES GANTI PASSWORD DAN USERNAME
-    public function changePass()
+    public function editAccount()
     {
-        $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $change = $this->crud->Update('user', array(
-            "password"=>$pass
-        ), array('id'=>$_POST['id']));
-        
+        $data = array();
+        if(isset($_POST['check-name'])){
+            $data['username'] = $_POST['username'];
+            $this->activityLog(
+                'ubah password',
+                'mengubah username '.$_POST['username']
+            );
+            if($this->session->username == $_POST['old-username']){
+                $this->session->set_userdata('username', $_POST['username']);
+            }
+        }
+        if(isset($_POST['check-pass'])){
+            $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $data['password'] = $pass;
+            $this->activityLog(
+                'ubah password',
+                'mengubah password '.$_POST['username']
+            );
+        }
+        $change = $this->crud->Update('user', $data, array('id'=>$_POST['id']));
         if($change){
-            $this->session->set_flashdata('success', 'Password berhasil diubah');
+            $this->session->set_flashdata('success', 'Akun berhasil diubah');
         }else{
-            $this->session->set_flashdata('error', 'Password gagal diubah');
+            $this->session->set_flashdata('error', 'Akun gagal diubah');
         }
         redirect(base_url('admin/account'));
     }
-    // public function login()
-    // {
-    //     $where = array(
-    //         'username' => $_POST['username'],
-    //         'password' => $_POST['password']
-    //     );
-    //     $data = $this->crud->GetWhere('user', $where);
-    //     if(count($data) > 0){
-    //         $this->session->set_userdata('username', $data[0]['username']);
-    //         redirect(base_url('admin/dashboard'));
-    //     }else{
-    //         $this->session->set_flashdata('error', 'Incorrect Username or Password');
-    //         redirect(base_url('admin'));
-    //     }
-    // }
+    public function deleteAccount()
+    {
+        $delete = $this->crud->Delete('user', array('id'=>$_POST['id']));
+        if($delete){
+            $this->activityLog(
+                'hapus akun',
+                'menghapus akun '.$_POST['username']
+            );
+            $this->session->set_flashdata('success', 'Akun berhasil dihapus');
+        }else{
+            $this->session->set_flashdata('error', 'Akun gagal dihapus');
+        }
+        redirect(base_url('admin/account'));
+    }
     /*
     | -------------------------------------------------------------------------
     | BERANDA
@@ -125,6 +161,10 @@ class Dataprocess extends CI_Controller {
         
         if ($uploaded['status'] == 1) {
             $newImages = $this->crud->InsertBatch($location, $uploaded['data']);
+            $this->activityLog(
+                'tambah gambar',
+                'menambah gambar '.$location
+            );
             $this->session->set_flashdata('success', 'Berhasil Menambahkan Gambar Baru di '.ucfirst($location));
         }else{
             $this->session->set_flashdata('error', 'Gagal Menambahkan Gambar Baru di '.ucfirst($location).$uploaded['error']);
@@ -140,6 +180,10 @@ class Dataprocess extends CI_Controller {
         if($delType=='batch'){
             $delete = $this->crud->DeleteAll($loc);
             delete_files(FCPATH.'assets/img/'.$loc);
+            $this->activityLog(
+                'hapus gambar',
+                'menghapus semua gambar '.$loc
+            );
         }else{
             $idDel = $_POST['id'];
             $image = $_POST['filename'];
@@ -148,6 +192,10 @@ class Dataprocess extends CI_Controller {
             $delete = $this->crud->Delete($loc, array('id' => $idDel));
             unlink(FCPATH.'assets/img/'.$loc.'/'.$image);
             unlink(FCPATH.'assets/img/'.$loc.'/'.$thumb);
+            $this->activityLog(
+                'hapus gambar',
+                'menghapus gambar '.$loc
+            );
         }
         
         if($delete){
@@ -180,6 +228,10 @@ class Dataprocess extends CI_Controller {
         }
         $insert = $this->crud->Insert('article', $data);
         if($insert){
+            $this->activityLog(
+                'tambah informasi',
+                'menambahkan informasi '.$_POST['title']
+            );
             $this->session->set_flashdata('success', 'Artikel Berhasil Ditambahkan');
         }else{
             $this->session->set_flashdata('error', 'Artikel Gagal Ditambahkan');
@@ -211,6 +263,10 @@ class Dataprocess extends CI_Controller {
         }
         $update = $this->crud->Update('article', $data, array('id'=>$_POST['edit-id-article']));
         if($update){
+            $this->activityLog(
+                'ubah informasi',
+                'menambahkan informasi '.$_POST['edit-title-article']
+            );
             $this->session->set_flashdata('success', 'Artikel Berhasil Diubah');
         }else{
             $this->session->set_flashdata('error', 'Artikel Gagal Diubah');
@@ -233,6 +289,11 @@ class Dataprocess extends CI_Controller {
                 unlink(FCPATH.'assets/img/'.$group.'/'.$img);
                 unlink(FCPATH.'assets/img/'.$group.'/'.$thumb);
             }
+            
+            $this->activityLog(
+                'hapus '.$group,
+                'menghapus '.$group.' dengan id '.$id
+            );
             $this->session->set_flashdata('success', ucfirst($group).' Berhasil Dihapus');
         }else{
             $this->session->set_flashdata('error', ucfirst($group).' Gagal Dihapus');
@@ -245,6 +306,10 @@ class Dataprocess extends CI_Controller {
         $removeTrue = $this->crud->Update('article', array('popup'=>false), array('popup'=>true));
         $addPopup = $this->crud->Update('article', array('popup'=>true), array('id'=>$id));
         if($addPopup){
+            $this->activityLog(
+                'set popup',
+                'men-set popup untuk informasi dengan id '.$id
+            );
             $this->session->set_flashdata('success', 'Pop-up Berhasil Diubah');
         }else{
             $this->session->set_flashdata('error', 'Pop-up Gagal Diubah');
@@ -255,6 +320,10 @@ class Dataprocess extends CI_Controller {
     {
         $removeTrue = $this->crud->Update('article', array('popup'=>false), array('popup'=>true));
         if($removeTrue){
+            $this->activityLog(
+                'unset popup',
+                'men-unset popup untuk informasi'
+            );
             $this->session->set_flashdata('success', 'Pop-up berhasil dihapus');
         }else{
             $this->session->set_flashdata('error', 'Pop-up gagal dihapus');
@@ -285,6 +354,10 @@ class Dataprocess extends CI_Controller {
         }
         $insert = $this->crud->Insert('event', $data);
         if($insert){
+            $this->activityLog(
+                'tambah kegiatan',
+                'menambahkan kegiatan '.$_POST['title']
+            );
             $this->session->set_flashdata('success', 'Kegiatan Berhasil Ditambahkan');
         }else{
             $this->session->set_flashdata('error', 'Kegiatan Gagal Ditambahkan');
@@ -319,6 +392,10 @@ class Dataprocess extends CI_Controller {
         }
         $update = $this->crud->Update('event', $data, array('id'=>$_POST['edit-id-event']));
         if($update){
+            $this->activityLog(
+                'ubah kegiatan',
+                'mengubah kegiatan '.$_POST['edit-title-event']
+            );
             $this->session->set_flashdata('success', 'Kegiatan Berhasil Diubah');
         }else{
             $this->session->set_flashdata('error', 'Kegiatan Gagal Diubah');
@@ -349,6 +426,10 @@ class Dataprocess extends CI_Controller {
         }
         $insert = $this->crud->Insert('testi', $data);
         if($insert){
+            $this->activityLog(
+                'tambah testimoni',
+                'menambahkan testimoni '.$_POST['name']
+            );
             $this->session->set_flashdata('success', 'Testimoni Berhasil Ditambahkan');
         }else{
             $this->session->set_flashdata('error', 'Testimoni Gagal Ditambahkan');
@@ -381,6 +462,10 @@ class Dataprocess extends CI_Controller {
         }
         $update = $this->crud->Update('testi', $data, array('id'=>$_POST['id']));
         if($update){
+            $this->activityLog(
+                'ubah testimoni',
+                'mengubah testimoni '.$_POST['name']
+            );
             $this->session->set_flashdata('success', 'Testimoni Berhasil Diubah');
         }else{
             $this->session->set_flashdata('error', 'Testimoni Gagal Diubah');
@@ -402,6 +487,10 @@ class Dataprocess extends CI_Controller {
                 unlink(FCPATH.'assets/img/alumni/'.$img);
                 unlink(FCPATH.'assets/img/alumni/'.$thumb);
             }
+            $this->activityLog(
+                'hapus testimoni',
+                'menghapus testimoni dengan id '.$id
+            );
             $this->session->set_flashdata('success', 'Testimoni Berhasil Dihapus');
         }else{
             $this->session->set_flashdata('error', 'Testimoni Gagal Dihapus');
@@ -430,6 +519,10 @@ class Dataprocess extends CI_Controller {
         }
         $insert = $this->crud->Insert('structure', $data);
         if($insert){
+            $this->activityLog(
+                'tambah struktur organisasi',
+                'menambahkan struktur organisasi '.$_POST['name']
+            );
             $this->session->set_flashdata('success', 'Struktur organisasi berhasil ditambahkan');
         }else{
             $this->session->set_flashdata('error', 'Struktur organisasi gagal ditambahkan');
@@ -448,8 +541,9 @@ class Dataprocess extends CI_Controller {
         );
         // Jika mengganti gambar depan
         if(!empty($_FILES['image']['name'])){
-            $data['photo'] = $_FILES['image']['name'];
             $uploaded = $this->crud->pict('person', 'image');
+            $data['photo'] = $this->upload->data('file_name');
+            print_r($uploaded);
             // Jika gambar depan lama bukan blank
             if($oldImg !== 'blank.jpg'){
                 $image = $oldImg;
@@ -461,6 +555,10 @@ class Dataprocess extends CI_Controller {
         }
         $update = $this->crud->Update('structure', $data, array('id'=>$_POST['id']));
         if($update){
+            $this->activityLog(
+                'ubah struktur organisasi',
+                'mengubah struktur organisasi '.$_POST['name']
+            );
             $this->session->set_flashdata('success', 'Berhasil diubah');
         }else{
             $this->session->set_flashdata('error', 'Gagal diubah');
@@ -482,6 +580,10 @@ class Dataprocess extends CI_Controller {
                 unlink(FCPATH.'assets/img/person/'.$img);
                 unlink(FCPATH.'assets/img/person/'.$thumb);
             }
+            $this->activityLog(
+                'hapus struktur organisasi',
+                'menghapus struktur organisasi dengan id '.$_POST['id']
+            );
             $this->session->set_flashdata('success', 'Struktur organisasi berhasil dihapus');
         }else{
             $this->session->set_flashdata('error', 'Struktur organisasi gagal dihapus');
