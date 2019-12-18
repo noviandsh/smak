@@ -13,6 +13,13 @@ class Crud extends CI_Model {
         $res=$this->db->get($table); // Kode ini berfungsi untuk memilih tabel yang akan ditampilkan
         return $res->result_array(); // Kode ini digunakan untuk mengembalikan hasil operasi $res menjadi sebuah array
     }
+    
+    public function GetOrderLimit($table, $col, $order, $limit){
+        $this->db->order_by($col, $order);
+        $this->db->limit($limit);
+        $res=$this->db->get($table); // Kode ini berfungsi untuk memilih tabel yang akan ditampilkan
+        return $res->result_array(); // Kode ini digunakan untuk mengembalikan hasil operasi $res menjadi sebuah array
+    }
 
     public function GetCount($table){
         $res=$this->db->get($table);
