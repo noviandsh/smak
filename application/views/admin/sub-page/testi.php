@@ -86,7 +86,7 @@
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" name="name" class="form-control" id="name">
-                        <input  type="text" name="id" id="id">
+                        <input hidden type="text" name="id" id="id">
                     </div>
                     <div class="form-group">
                         <label for="year">Alumni Tahun</label>
@@ -103,7 +103,7 @@
                         </button><br>
                         <img id="image-old-preview" src="" alt="" style="max-width: 200px;max-height: 140px;">
                         <input id="image" name="image" type='file'/>
-                        <input  type="text" name="image-old" id="image-old">
+                        <input hidden type="text" name="image-old" id="image-old">
                         <small style="color: #9a9a9a;">Max file size 2MB</small>
                     </div>
                     <div class="form-group testi-textarea">
@@ -113,7 +113,7 @@
                 </form>
                 
                 <!-- delete testi -->
-                <form style="display:unset;" action="<?=base_url()?>dataprocess/deletetesti" method="post" id="delete-form">
+                <form style="display:none;" action="<?=base_url()?>dataprocess/deletetesti" method="post" id="delete-form">
                     <input type="text"  id="delete-id" name="id">
                     <input type="text"  id="delete-img" name="img">
                 </form>

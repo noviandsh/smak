@@ -1,6 +1,6 @@
 <div id="navbar">
     <div id="logo">
-        <img src="<?=base_url()?>assets/img/logo.png" alt="" srcset=""> 
+        <a href="<?=base_url()?>"><img src="<?=base_url()?>assets/img/logo.png" alt="" srcset=""></a>
         <div id="school-name">
             <div>SMAK YOS SUDARSO BATU</div>
             <small>JL. PANGLIMA SUDIRMAN NO. 63</small>
@@ -14,11 +14,11 @@
     </div>
     <div id="menubar">
         <ul>
-            <li id="menu-one"><a href="#header">Beranda</a></li>
-            <li id="menu-two"><a href="#info">Jajaran</a></li>
-            <li id="menu-three"><a href="#content">Ekstra</a></li>
-            <li id="menu-four"><a href="#testi">Alumni</a></li>
-            <li id="menu-five"><a href="#gallery">Kontak</a></li>
+            <li id="menu-one"><a href="<?=base_url()?>">Beranda</a></li>
+            <li id="menu-two"><a href="<?=base_url()?>article">Berita</a></li>
+            <li id="menu-three"><a href="<?=base_url()?>event">Kegiatan</a></li>
+            <li id="menu-four"><a href="<?=base_url()?>gallery">Galeri</a></li>
+            <li id="menu-five"><a href="<?=base_url()?>alumni">Alumni</a></li>
             <div></div>
         </ul>
     </div>

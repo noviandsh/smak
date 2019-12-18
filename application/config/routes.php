@@ -57,5 +57,12 @@ $route['dataprocess/login'] = 'dataprocess/login';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['article/(:any)'] = 'home/viewArticle/$1';
-$route['event/(:any)'] = 'home/viewArticle/$1';
+
+$route['article'] = 'home/homePage';
+$route['event'] = 'home/homePage';
+$route['gallery'] = 'home/homePage';
+$route['alumni'] = 'home/homePage';
+$route['article/(:any)'] = 'home/homePage/$1';
+$route['event/(:any)'] = 'home/homePage/$1';
+$route['gallery/(:any)'] = 'home/homePage/$1';
+$route['alumni/(:any)'] = 'home/homePage/$1';

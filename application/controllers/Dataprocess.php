@@ -11,6 +11,10 @@ class Dataprocess extends CI_Controller {
         $this->load->library(array('image_lib', 'encrypt'));
         $this->load->model('crud');
         date_default_timezone_set('Asia/Jakarta');
+        if(empty($this->session->username) && $this->uri->segment(2) != 'login'){
+            show_404();
+			die();
+        }
     }
     
     public function clean($string) {
@@ -37,7 +41,10 @@ class Dataprocess extends CI_Controller {
     | LOGIN
     | -------------------------------------------------------------------------
     */
-
+    public function coba()
+    {
+        echo 'hwhwhw';
+    }
     // PROSES LOGOUT
     public function logout()
     {
@@ -117,6 +124,21 @@ class Dataprocess extends CI_Controller {
             if($this->session->username == $_POST['old-username']){
                 $this->session->set_userdata('username', $_POST['username']);
             }
+            $this->crud->Update('article', array(
+                'author'=>$_POST['username']
+            ), array(
+                'author'=>$_POST['old-username']
+            ));
+            $this->crud->Update('event', array(
+                'author'=>$_POST['username']
+            ), array(
+                'author'=>$_POST['old-username']
+            ));
+            $this->crud->Update('user_log', array(
+                'username'=>$_POST['username']
+            ), array(
+                'username'=>$_POST['old-username']
+            ));
         }
         if(isset($_POST['check-pass'])){
             $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -205,6 +227,21 @@ class Dataprocess extends CI_Controller {
         }
         redirect(base_url('admin/dashboard'));
     }
+    
+    public function editSpeech()
+    {
+        $edit = $this->crud->Update('speech', array('content'=>$_POST['edit-speech']), array('id'=>'1'));
+        if($edit){
+            $this->activityLog(
+                'ubah sambutan',
+                'mengubah sambutan kepala sekolah'
+            );
+            $this->session->set_flashdata('success', 'Sambutan berhasil diubah');
+        }else{
+            $this->session->set_flashdata('error', 'Sambutan gagal diubah');
+        }
+        redirect(base_url('admin/dashboard'));
+    }
     /*
     | -------------------------------------------------------------------------
     | ARTIKEL
@@ -213,8 +250,6 @@ class Dataprocess extends CI_Controller {
     // TAMBAH ARTIKEL
     public function newArticle()
     {
-        // $this->ceklogin();
-        
         $data = array(
             'title' => $_POST['title'],
             'link' => $this->clean($_POST['title']),
@@ -241,7 +276,6 @@ class Dataprocess extends CI_Controller {
     // EDIT ARTIKEL
     public function editArticle()
     {
-        // $this->ceklogin();
         $oldImg = $_POST['edit-image-old-article'];
         $data = array(
             'title' => strtolower($_POST['edit-title-article']),
@@ -265,7 +299,7 @@ class Dataprocess extends CI_Controller {
         if($update){
             $this->activityLog(
                 'ubah informasi',
-                'menambahkan informasi '.$_POST['edit-title-article']
+                'mengubah informasi '.$_POST['edit-title-article']
             );
             $this->session->set_flashdata('success', 'Artikel Berhasil Diubah');
         }else{
@@ -276,7 +310,6 @@ class Dataprocess extends CI_Controller {
     // DELETE ARTIKEL
     public function deleteArticle()
     {
-        // $this->ceklogin();
         $id = $_POST['id'];
         $group = $_POST['group'];
         $img = $_POST['img'];
@@ -338,8 +371,6 @@ class Dataprocess extends CI_Controller {
     // TAMBAH ARTIKEL
     public function newEvent()
     {
-        // $this->ceklogin();
-        
         $data = array(
             'title' => $_POST['title'],
             'link' => $this->clean($_POST['title']),
@@ -367,7 +398,6 @@ class Dataprocess extends CI_Controller {
     // EDIT ARTIKEL
     public function editEvent()
     {
-        // $this->ceklogin();
         $oldImg = $_POST['edit-image-old-event'];
         $data = array(
             'title' => strtolower($_POST['edit-title-event']),
@@ -411,8 +441,6 @@ class Dataprocess extends CI_Controller {
     // TAMBAH TESTI
     public function newTesti()
     {
-        // $this->ceklogin();
-        
         $data = array(
             'name' => $_POST['name'],
             'year' => $_POST['year'],
@@ -439,7 +467,6 @@ class Dataprocess extends CI_Controller {
     // EDIT TESTI
     public function editTesti()
     {
-        // $this->ceklogin();
         $oldImg = $_POST['image-old'];
         $data = array(
             'name' => strtolower($_POST['name']),
@@ -475,7 +502,6 @@ class Dataprocess extends CI_Controller {
     // DELETE TESTI
     public function deleteTesti()
     {
-        // $this->ceklogin();
         $id = $_POST['id'];
         $img = $_POST['img'];
         $delete = $this->crud->Delete('testi', array('id' => $id));
@@ -505,8 +531,6 @@ class Dataprocess extends CI_Controller {
     // TAMBAH PERSON
     public function addPerson()
     {
-        // $this->ceklogin();
-        
         $data = array(
             'name' => $_POST['name'],
             'nip' => $_POST['nip'],
@@ -532,7 +556,6 @@ class Dataprocess extends CI_Controller {
     // EDIT TESTI
     public function editPerson()
     {
-        // $this->ceklogin();
         $oldImg = $_POST['image-old'];
         $data = array(
             'name' => $_POST['name'],
@@ -568,7 +591,6 @@ class Dataprocess extends CI_Controller {
     // DELETE TESTI
     public function deletePerson()
     {
-        // $this->ceklogin();
         $id = $_POST['id'];
         $img = $_POST['img'];
         $delete = $this->crud->Delete('structure', array('id' => $id));
@@ -589,6 +611,17 @@ class Dataprocess extends CI_Controller {
             $this->session->set_flashdata('error', 'Struktur organisasi gagal dihapus');
         }
         redirect(base_url('admin/structure'));
+    }
+    public function deleteLog()
+    {
+        $delete = $this->crud->DeleteAll('user_log');
+        
+        if($delete){
+            $this->session->set_flashdata('success', 'Log aktifitas berhasil dihapus');
+        }else{
+            $this->session->set_flashdata('error', 'Log aktifitas gagal dihapus');
+        }
+        redirect(base_url('admin/activity'));
     }
 }
 

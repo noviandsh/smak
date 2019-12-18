@@ -229,7 +229,7 @@ if ($this->uri->segment(3)!=='info') {
                     <input type="text"  id="delete-img" name="img">
                 </form>
                 <!-- delete popup -->
-                <form style="display:unset;" action="<?=base_url()?>dataprocess/setpopup" method="post" id="popup-form">
+                <form style="display:none;" action="<?=base_url()?>dataprocess/setpopup" method="post" id="popup-form">
                     <input type="text"  id="popup-id" name="id">
                 </form>
             </div>
@@ -313,7 +313,7 @@ if ($this->uri->segment(3)!=='info') {
         }
         else{
             $('#popup-btn').show();
-            title = 'PopUp | '+title;
+            title = 'Tampilkan "'+title+'" sebagai popup pengumuman';
             modal.find('#popup-id').val(id);
         }
 

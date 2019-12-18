@@ -11,3 +11,4 @@ $(window).scroll(function () {
 $("#burgerbar").click(function(){
     $("#navbar").toggleClass('open');
 });
+$('#footer').css('height', '40px');

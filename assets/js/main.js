@@ -1,54 +1,33 @@
-
+$('#footer').prepend($('#gallery'));
 $(document).ready(function(){ 
-    let menu = {
-        header: 0,
-        info: 20,
-        content: 40,
-        testi: 60,
-        gallery: 80
-    };
-    $('.section').each(function eachElement(){
-        let $this = $(this);
-        let position = $this.position();
-        let end = position.top + $this.height();
-        let id = $this.attr('id');
-        // $('body').append('<div class="patok" style="top:'+position.top+'px">in '+id+'</div>');
-        // $('body').append('<div class="patok" style="top:'+end+'px">out '+id+'</div>');
-        $('#info').scrollspy({
-            min: position.top - 105,
-            max: position.top + $this.height(),
-            onEnter: function(element, position) {
-                // $nav.addClass('fixed');
-                $('#menubar div').css('margin-left', menu[id]+'%');
-                console.log('masuk '+id);
-                // console.log($this);
-                // console.log(id);
-                // console.log(position);
-            },
-            onLeave: function(element, position) {
-                // $('#navbar').css('position', 'fixed');
-                console.log('keluar '+id);
-            }
-        });
-    });
     if(popup>0){
         $('#modal-news').modal('show')
     }
 });
 
-// // SMOOTH SCROLL
-// $(document).on('click', 'a[href^="#"]', function (event) {
-//     event.preventDefault();
-//     console.log($('#header-shadow')[0].scrollHeight);
-//     $('html, body').animate({
-//         scrollTop: $('#header-shadow').height()
-//     }, {
-//         duration: 1000, 
-//         specialEasing: {
-//             scrollTop: "easeOutCirc"
-//         }
-//     });
-// });
+
+AOS.init({
+    // Global settings:
+    disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+    startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+    initClassName: 'aos-init', // class applied after initialization
+    animatedClassName: 'aos-animate', // class applied on animation
+    useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+    disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+    debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+    throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+    
+  
+    // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+    offset: 120, // offset (in px) from the original trigger point
+    delay: 0, // values from 0 to 3000, with step 50ms
+    duration: 400, // values from 0 to 3000, with step 50ms
+    easing: 'ease', // default easing for AOS animations
+    once: false, // whether animation should happen only once - while scrolling down
+    mirror: false, // whether elements should animate out while scrolling past them
+    anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+});
+
 $('a[href*="#"]')
   // Remove links that don't actually link to anything
   .not('[href="#"]')
@@ -89,32 +68,19 @@ $('a[href*="#"]')
 let tl = new TimelineMax({repeat: -1});
 
 tl.to("#header-filter:before", 2, {
-    // transformOrigin:'80% 20%',
-    // rotation:100,
-    // xPercent:-25,
     yPercent:20,
-    // scaleX:0.3,
-    // scaleY:1.5,
     ease: Back.easeIn.config(1.7)
 })
 .to("#header-filter:before", 1, {
-    // transformOrigin:'80% 20%',
-    // rotation:100,
-    // xPercent:-25,
     yPercent:0,
-    // scaleX:0.3,
-    // scaleY:1.5,
     ease: Back.easeOut.config(1.7)
 });
 
 $(window).scroll(function () {
     if ($(this).scrollTop()  <= 210 ){
         $("#navbar").removeClass('not-top');
-        // $("#header-shadow").css('margin-top', '210px');
     }else{
         $("#navbar").addClass('not-top');
-        // $("#header-shadow").css('margin-top', '70px');
-        // $("#school-info").slideUp();
     }
 });
 $("#burgerbar").click(function(){
@@ -174,32 +140,6 @@ $('.control-next').click(function () {
     moveLeft();
 });
 
-// GALLERY
-// let gallery = $("#gallery");
-// let galleryItem = $(".gallery-item");
-// let galleryBox = $("#gallery-box");
-// let galleryCount = galleryItem.length;
-// let galleryWidth = galleryItem.width();
-// let galleryBoxWidth = galleryCount * galleryWidth;
-
-// galleryBox.css('width', galleryBoxWidth);
-// // galleryBox.prepend([
-// //     galleryItem.last(),
-// //     galleryItem.last().prev()
-// // ])
-// $(".gallery-item").last().prependTo(galleryBox);
-// $(".gallery-item").last().prependTo(galleryBox);
-
-// $("#gallery-box").slick({
-// centerMode:true,
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//     dots: true,
-//     infinite: true,
-//     cssEase: 'linear',
-//     variableWidth: true,
-//     variableHeight: true
-// });
 
 $("#testi").slick({
     slidesToShow: 3,

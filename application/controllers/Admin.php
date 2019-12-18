@@ -60,6 +60,7 @@ class Admin extends CI_Controller {
         $str_links = $this->pagination->create_links();
         $subData["links"] = explode('&nbsp;',$str_links );
         
+        $subData['speech'] = $this->crud->Get('speech');
         $subData['slider'] = $this->crud->Get('slider');
         $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
         $data['content'] = $this->load->view('admin/sub-page/beranda', $subData, TRUE);
@@ -188,13 +189,47 @@ class Admin extends CI_Controller {
         $data['content'] = $this->load->view('admin/sub-page/account', $subData, TRUE);
         $this->load->view('admin/dashboard', $data);
     }
-    public function structure()
+    public function activity()
     {
         $this->sessionCheck('admin');
-        $subData['person'] = $this->crud->Get('structure');
+        if($this->session->type != 0){
+            redirect(base_url('admin/dashboard'));
+        }
+
+        $this->load->library('pagination');
+        $data['val'] = $this->crud->Get('user_log');
+        $total = count($data['val']);
+        $config = array();
+        $config['use_page_numbers'] = TRUE; // Use pagination number for anchor URL.
+        $config['num_links'] =  $total;//Set that how many number of pages you want to view.
+        $config['cur_tag_open'] = '<a class="current">'; // Open tag for CURRENT link.
+        $config['cur_tag_close'] = '</a>'; // Close tag for CURRENT link.
+        $config['next_link'] = 'Next'; // By clicking on performing NEXT pagination.
+        $config['prev_link'] = 'Previous'; // By clicking on performing PREVIOUS pagination.
+        $config['base_url'] = base_url('/admin/activity/');
+        $config['total_rows'] = $total;
+        $config['per_page'] = 15;
+        $config['first_url'] = base_url('/admin/activity/1'); 
+        $from = $this->uri->segment(3);
+        $this->pagination->initialize($config);
+        if (empty($from)) {
+            $from = 1;
+        }
+        $subData['log'] = $this->crud->dataSort('user_log', $config['per_page'], $from, 'id', 'DESC');
+        $str_links = $this->pagination->create_links();
+        $subData["links"] = explode('&nbsp;',$str_links );
+
         $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
-        $data['content'] = $this->load->view('admin/sub-page/structure', $subData, TRUE);
+        $data['content'] = $this->load->view('admin/sub-page/activity', $subData, TRUE);
         $this->load->view('admin/dashboard', $data);
+    }
+    public function structure()
+    {
+        // $this->sessionCheck('admin');
+        // $subData['person'] = $this->crud->Get('structure');
+        // $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
+        // $data['content'] = $this->load->view('admin/sub-page/structure', $subData, TRUE);
+        // $this->load->view('admin/dashboard', $data);
     }
 }
 

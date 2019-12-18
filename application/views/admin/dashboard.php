@@ -135,14 +135,19 @@
                     <a href='".base_url()."admin/account'>
                       <i class='fa fa-user'></i> <span>Manajemen Akun</span>
                     </a>
+                  </li>
+                  <li>
+                    <a href='".base_url()."admin/activity'>
+                      <i class='fa fa-list-alt'></i> <span>Log Aktifitas</span>
+                    </a>
                   </li>";
           }
           ?>
-          <li>
+          <!-- <li>
             <a href="<?=base_url()?>admin/structure">
               <i class="fa fa-users"></i> <span>Struktur organisasi</span>
             </a>
-          </li>
+          </li> -->
 
           <li>
             <a href="<?=base_url()?>admin/testi">
@@ -150,67 +155,13 @@
             </a>
           </li>
           
-          <!-- <li>
-            <a href="<?=base_url()?>admin/testimoni">
-              <i class="fa fa-image"></i> <span>Galeri</span>
-            </a>
-          </li> -->
 
           <li>
             <a href="<?=base_url()?>admin/article">
               <i class="fa fa-book"></i> <span>Artikel</span>
             </a>
           </li>
-          <!-- <li>
-            <a href="<?=base_url()?>admin/simulasi-kredit">
-              <i class="fa fa-usd"></i> <span>Simulasi Kredit</span>
-              <span id="count-simulasi">
-                <?php
-                  if($countSimulasi>0){
-                    echo "<span class='pull-right-container'>
-                          <small class='label pull-right bg-green'>".$countSimulasi."</small>
-                        </span>";
-                  }
-                ?>
-              </span>
-            </a>
-          </li>
           
-          <li>
-            <a href="<?=base_url()?>admin/test-drive">
-              <i class="fa fa-dashboard"></i> <span>Permintaan Test Drive</span>
-              <span id="count-test-drive">
-                <?php
-                  if($countTestDrive>0){
-                    echo "<span class='pull-right-container'>
-                          <small class='label pull-right bg-green'>".$countTestDrive."</small>
-                        </span>";
-                  }
-                ?>
-              </span>
-            </a>
-          </li> -->
-         
-          <!-- <li>
-            <a href="<?=base_url()?>admin/inbox">
-              <i class="fa fa-envelope"></i> <span>Pesan Masuk</span>
-              <span id="count-inbox">
-                <?php
-                  if($countInbox>0){
-                    echo "<span class='pull-right-container'>
-                          <small class='label pull-right bg-green'>".$countInbox."</small>
-                        </span>";
-                  }
-                ?>
-              </span>
-            </a>
-          </li> -->
-
-          <!-- <li>
-            <a href="<?=base_url()?>admin/galeri">
-              <i class="fa fa-picture-o"></i> <span>Galeri</span>
-            </a>
-          </li> -->
 
 
          

@@ -46,7 +46,7 @@ function readMore($str, $char)
                 <span class="content-title">Berita & Informasi Terbaru</span><br><br>
                 <?php
                     foreach($article as $a){
-                        echo "<div class='news-item'>
+                        echo "<div class='news-item' data-aos='fade-right' data-aos-easing='ease-in-out-back'>
                                 <img src='".base_url('assets/img/article/'.$a['image'])."' alt=''>
                                 <div class='desc'>
                                     <h4><a href='".base_url('article/'.$a['link'])."'>".ucwords($a['title'])."</a></h4>
@@ -62,7 +62,7 @@ function readMore($str, $char)
                 <?php
                     $month = array('01' => 'JAN','02' => 'FEB','03' => 'MAR','04' => 'APR','05' => 'MEI','06' => 'JUN','07' => 'JUL','08' => 'AUG','09' => 'SEP','10' => 'OKT','11' => 'NOV','12' => 'DEC');
                     foreach($event as $e){
-                        echo "<div class='agenda-item'>
+                        echo "<div class='agenda-item' data-aos='fade-left'>
                                 <div class='calendar'>
                                     <div class='month'>".$month[$e['startDate']['month']]."</div>
                                     <div class='date'>".$e['startDate']['date']."</div>
@@ -82,28 +82,22 @@ function readMore($str, $char)
             <div id="content-clip">
                 <div id="content-filter">
                     <div id="headmaster-box">
-                        <div id="headmaster-profile">
+                        <div id="headmaster-profile" data-aos="zoom-in-up">
                             <div style="background:url(<?=base_url('assets/img/person/'.$headmaster[0]['photo'])?>);background-size: cover;" class="photo"></div>
                             <span><?=$headmaster[0]['name']?></span>
                         </div>
-                        <div id="headmaster-speech">
+                        <div id="headmaster-speech" data-aos="zoom-out-left">
                             <h4>Kepala Sekolah SMAK Yos Sudarso Batu</h4><br>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt laborum obcaecati ratione quod, 
-                            inventore aliquid aperiam quo animi, deleniti similique, asperiores tenetur sed ipsum exercitationem 
-                            quisquam qui rerum sint quibusdam eius quas soluta! Pariatur laudantium incidunt soluta nam voluptates 
-                            exercitationem animi voluptate molestiae eligendi est ipsam delectus, ratione aut omnis nisi. Et dolorem 
-                            necessitatibus, est mollitia asperiores sequi dolor illo amet qui odit optio nesciunt consequatur ratione 
-                            autem? Veritatis, aliquam maxime delectus, repudiandae corrupti eum asperiores voluptatum distinctio omnis 
-                            possimus saepe unde? Non minus, quam saepe ullam natus unde, quasi optio ipsam rem odit, explicabo itaque 
-                            velit aliquam fuga magnam.
+                            <?=$speech[0]['content']?>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="testi-title">Alumni</div>
             <div id="testi" class="section">
                 <?php
                     foreach($testi as $val){
-                        echo "<div class='testi-card'>
+                        echo "<div class='testi-card' data-aos='zoom-out-down'>
                                 <p>".$val['testimoni']."</p>
                                 <div class='testi-profile'>
                                     <div class='profile-photo' style='background:url(".base_url('assets/img/alumni/'.$val['photo']).");background-size: cover;background-position: center;'>
@@ -118,10 +112,11 @@ function readMore($str, $char)
                 ?>
             </div>
             <div id="gallery" class="section">
+                <div id="gallery-title">Galeri</div>
                 <div id="gallery-box">
                     <?php 
                         foreach($gallery as $gal){
-                            echo "<a href='".base_url()."assets/img/gallery/".$gal['file']."'><div class='gallery-item' style='background:url(".base_url()."assets/img/gallery/".$gal['file'].");background-size:cover;background-position:center;'>
+                            echo "<a href='".base_url()."assets/img/gallery/".$gal['file']."' data-aos='zoom-in-up'><div class='gallery-item' style='background:url(".base_url()."assets/img/gallery/".$gal['file'].");background-size:cover;background-position:center;'>
                                 </div></a>";
                         }
                     ?>
@@ -160,7 +155,22 @@ function readMore($str, $char)
     <script src="<?=base_url()?>assets/js/slick.min.js"></script>
     <script src="<?=base_url()?>assets/js/jquery.magnific-popup.js"></script>
     <script src="<?=base_url()?>assets/js/bootstrap.js"></script>
-	<script src="<?=base_url()?>assets/js/jquery-scrollspy.min.js"></script>
+    <script src="<?=base_url()?>assets/js/jquery-scrollspy.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        let menu = {
+            undefined: 0,
+            article: 20,
+            event: 40,
+            gallery: 60,
+            alumni: 80
+        };
+        if('<?=$this->uri->segment(1)?>' === ''){
+            $('#menubar div').css('margin-left', '0%');
+        }else{
+            $('#menubar div').css('margin-left', menu['<?=$this->uri->segment(1)?>']+'%');
+        }
+    </script>
     <script src="<?=base_url()?>assets/js/main.js"></script>
 </body>
 </html>

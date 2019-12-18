@@ -10,6 +10,19 @@
         return $thumb;
     }
 ?>
+<div class="box box-primary">
+    <div class="box-inner">
+        <h4><b>Sambutan kepala sekolah</b></h4>
+        <div id="speech"><?php
+                if(!empty($speech)){
+                    echo $speech[0]['content'];
+                }
+            ?></div>
+    </div>
+    <div style="margin-left:10px;">
+        <button data-toggle="modal" data-target="#modal-speech" type='button' class='btn btn-warning btn-s'>Edit</button>
+    </div><br>
+</div>
 <div class="box box-success">
     <div class="box-inner">
         <h4><b>SLIDER</b></h4>
@@ -74,6 +87,29 @@
     </div><br>
 </div>
 <!-- MODAL -->
+<!-- modal speech -->
+<div class="modal fade" id="modal-speech" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-xs" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Edit Sambutan</h4>
+        </div>
+        <div class="modal-body">
+            <?= form_open_multipart(base_url('dataprocess/editspeech'), array('id' => 'form-speech'));?>
+                <div class="form-group">
+                    <label for="edit-speech" class="control-label">Sambutan</label>
+                    <textarea rows="20" type="text" class="form-control" id="edit-speech" name="edit-speech"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+            <button type="button" id="edit-btn" class="btn btn-primary">Edit</button>
+        </div>
+        </div>
+    </div>
+</div>
 <!-- modal tambah -->
 <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-xs" role="document">
@@ -88,12 +124,12 @@
                     <input name="files[]" type='file' multiple/>
                     <small style="color: #9a9a9a;">Max file size 2MB</small>  
                 </div>
-                <input type="text" name="location" id="images-location">
+                <input hidden type="text" name="location" id="images-location">
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-            <button type="button" id="tambah-btn" class="btn btn-primary">Tambahkan</button>
+            <button type="button" id="submit-btn" class="btn btn-primary">Tambahkan</button>
         </div>
         </div>
     </div>
@@ -105,7 +141,7 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Apakah anda yakin akan menghapus <span style="color:red;" id="delete-name"></span> dari <span id="delete-location"></span>?</h4>
-            <form action="<?=base_url()?>dataprocess/deleteimages" method="post" id="form-delete">
+            <form style="display:none;" action="<?=base_url()?>dataprocess/deleteimages" method="post" id="form-delete">
                 <input type="text" id="delete-id" name="id">
                 <input type="text" id="delete-filename" name="filename">
                 <input type="text" id="delete-type" name="jenis">
@@ -141,6 +177,12 @@
         $("#images-location").val(loc);
         $("#tambah-btn").click(function(){
             $('#form-tambah').submit();
+        });
+    })
+    $('#modal-speech').on('show.bs.modal', function (event){
+        $("#edit-speech").val($('#speech').html());
+        $("#edit-btn").click(function(){
+            $('#form-speech').submit();
         });
     })
     $('#modal-delete').on('show.bs.modal', function (event){
