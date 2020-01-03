@@ -225,11 +225,27 @@ class Admin extends CI_Controller {
     }
     public function structure()
     {
-        // $this->sessionCheck('admin');
-        // $subData['person'] = $this->crud->Get('structure');
-        // $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
-        // $data['content'] = $this->load->view('admin/sub-page/structure', $subData, TRUE);
-        // $this->load->view('admin/dashboard', $data);
+        $this->sessionCheck('admin');
+        $subData['person'] = $this->crud->Get('structure');
+        $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
+        $data['content'] = $this->load->view('admin/sub-page/structure', $subData, TRUE);
+        $this->load->view('admin/dashboard', $data);
+    }
+    public function ppdb()
+    {
+        $this->sessionCheck('admin');
+        $subData['ppdb'] = $this->crud->Get('ppdb');
+        $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
+        $data['content'] = $this->load->view('admin/sub-page/ppdb', $subData, TRUE);
+        $this->load->view('admin/dashboard', $data);
+    }
+    public function profile()
+    {
+        $this->sessionCheck('admin');
+        $subData['profile'] = $this->crud->Get('profile');
+        $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
+        $data['content'] = $this->load->view('admin/sub-page/profile', $subData, TRUE);
+        $this->load->view('admin/dashboard', $data);
     }
 }
 

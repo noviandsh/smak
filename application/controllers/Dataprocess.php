@@ -623,6 +623,35 @@ class Dataprocess extends CI_Controller {
         }
         redirect(base_url('admin/activity'));
     }
+    
+    public function editPpdb()
+    {
+        $edit = $this->crud->Update('ppdb', array('content'=>$_POST['edit-ppdb']), array('id'=>'1'));
+        if($edit){
+            $this->activityLog(
+                'ubah ppdb',
+                'mengubah halaman PPDB'
+            );
+            $this->session->set_flashdata('success', 'Halaman PPDB berhasil diubah');
+        }else{
+            $this->session->set_flashdata('error', 'Halaman PPDB gagal diubah');
+        }
+        redirect(base_url('admin/ppdb'));
+    }
+    public function editProfile()
+    {
+        $edit = $this->crud->Update('profile', array('content'=>$_POST['edit-profile']), array('id'=>'1'));
+        if($edit){
+            $this->activityLog(
+                'ubah profile',
+                'mengubah halaman profile'
+            );
+            $this->session->set_flashdata('success', 'Halaman profile berhasil diubah');
+        }else{
+            $this->session->set_flashdata('error', 'Halaman profile gagal diubah');
+        }
+        redirect(base_url('admin/profile'));
+    }
 }
 
 /* End of file Dataprocess.php */

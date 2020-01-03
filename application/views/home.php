@@ -27,9 +27,7 @@ function readMore($str, $char)
                     <div id="slider-item-box">
                         <?php
                             foreach(array_reverse($slider) as $a){
-                                echo "<div class='slider-item'>
-                                        <img src='".base_url('assets/img/slider/').$a['file']."' alt=''>
-                                    </div>";
+                                echo "<div class='slider-item' style='background-image:url(".base_url('assets/img/slider/').$a['file'].")'></div>";
                             }
                         ?>
                     </div>
@@ -138,6 +136,7 @@ function readMore($str, $char)
                     <!-- MODAL BODY -->
                     <!-- view article -->
                     <div id="news-content">
+                        <img src="<?=base_url('assets/img/article/').$popup[0]['image']?>" style="min-width:100%;margin-bottom:30px;" alt="">
                         <?=$popup[0]['content']?>
                     </div>
                 </div>

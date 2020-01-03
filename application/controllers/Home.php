@@ -82,8 +82,8 @@ class Home extends CI_Controller {
 		$data['speech'] = $this->crud->Get('speech');
 		$data['testi'] = $this->crud->Get('testi');
 		$data['article'] = $this->crud->GetOrderLimit('article', 'id', 'DESC', 5);
-		$data['slider'] = $this->crud->Get('slider');
-		$data['gallery'] = $this->crud->GetOrderLimit('gallery', 'id', 'DESC', 10);
+		$data['slider'] = $this->crud->GetOrderLimit('slider', 'id', 'DESC', 5);
+		$data['gallery'] = $this->crud->Get('gallery');
 		$this->load->view('home', $data);
 	}
 
@@ -127,6 +127,9 @@ class Home extends CI_Controller {
 			// page gallery
 			elseif($type == 'gallery'){
 				$subData = $this->pagination('gallery', 20, 'gallery');
+			}
+			elseif($type == 'ppdb'){
+				$subData = 'null';
 			}
 			// page alumni
 			elseif($type == 'alumni'){

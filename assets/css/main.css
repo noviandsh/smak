@@ -52,57 +52,68 @@ body{
     transition: .4s all ease-in-out;
 }
 #logo, #school-info{
-    position: absolute;
-    width: fit-content;
+    /* position: absolute; */
+    width: 100%;
     padding: 10px;
 }
 #logo{
-    height: 145px;
+    height: 205px;
 }
 #logo img{
     float: left;
     /* max-width: 100px; */
     max-height: 100%;
-    margin-right: 20px;
+    margin-left: 20px;
 }
 #school-name{
     /* transition: .05s all ease-in-out; */
-    transition: .4s all ease-in-out;
-    transition: .05s font-size ease-in-out;
+    /* transition: .4s all ease-in-out;
+    transition: .05s font-size ease-in-out; */
     float: left;
     color: white;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 30px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
     font-style: normal;
     text-decoration: none;
-    margin-top: 10px;
+    margin-left: 45px;
 }
-#school-name>div{
+#school-name>div:first-child{
     margin-bottom: -10px;
+    font-size: 5.7vw;
 }
 #school-name>small{
     font-size: 13px;
 }
 #school-info{
     /* transition: .5s all ease-in-out; */
-    right: 0;
-    top: 0;
+    /* right: 0;
+    top: 0; */
     text-align: left;
     color: white;
-    padding-top: 20px;
+    /* padding-top: 20px; */
+    padding: 0;
+    margin-top: -10px;
+    text-align: center;
 }
 #school-info ul{
     list-style: none;
+    padding-left: 0;
+}
+#school-info ul>li{
+    display: inline;
+    margin: 0 20px;
 }
 #school-info i{
-    margin: 0 12px 15px 0;
+    margin-right: 3px;
 }
 #menubar{
     width: 700px;
     position: absolute;
-    top: 150px;
+    top: 158px;
     left: 50%;
-    margin-left: -350px;
+    margin-left: -25vw;
+    background: rgba(0, 0, 0, 0.23137254901960785);
+    border-radius: 10px 10px 0 0;
 }
 #menubar ul{
     list-style: none;
@@ -120,12 +131,12 @@ body{
     color: white;
     padding: 10px;
     margin: 0;
-    width: 20%;
+    width: 16.5%;
     display: inline-block;
 }
 #menubar div{
     height: 1.5px;
-    width: 20%;
+    width: 16.5%;
     margin: 0;
     background: rgba(0, 242, 97, 0.7);
     border: none;
@@ -136,16 +147,19 @@ body{
     margin-left: 0% !important;
 }
 #menu-two:hover ~ div{
-    margin-left: 20% !important;
+    margin-left: 16.5% !important;
 }
 #menu-three:hover ~ div{
-    margin-left: 40% !important;
+    margin-left: calc(16.5% * 2) !important;
 }
 #menu-four:hover ~ div{
-    margin-left: 60% !important;
+    margin-left: calc(16.5% * 3) !important;
 }
 #menu-five:hover ~ div{
-    margin-left: 80% !important;
+    margin-left: calc(16.5% * 4) !important;
+}
+#menu-six:hover ~ div{
+    margin-left: 83.5% !important;
 }
 #burgerbar{
     position: absolute;
@@ -165,22 +179,20 @@ body{
     /* margin-top: -70px; */
     /* background: red; */
 }
-.not-top #school-info{
-    /* display: none; */
-    top: -150px;
+.not-top #school-name>div:first-child{
+    font-size: 34px;
+}
+.not-top #school-name{
+    transform: translateY(-80px);
 }
 .not-top #logo{
     /* transition: .4s all ease-in-out; */
     height: 70px;
 }
-.not-top #school-name{
-    font-size: 20px;
-    margin-top: 0;
-}
 .not-top #menubar{
-    top: 20px;
+    top: 27px;
     left: 100%;
-    margin-left: -710px;
+    margin-left: -720px;
 }
 .not-top #menubar>ul>li>a{
     font-size: 14px;
@@ -196,7 +208,7 @@ body{
 #header{
     width: 100%;
     min-height: 600px;
-    height: 77vh;
+    height: 100%;
     clip-path: url(#wave);
 }
 #header-filter{
@@ -238,7 +250,7 @@ body{
 /* image slider style */
 #image-slider{
     min-height: 800px;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -252,9 +264,11 @@ body{
 }
 .slider-item{
     width: 100%;
-    height: 100%;
+    height: 100vh;
     position: absolute;
     top: 0;
+    background-size: cover;
+    background-position: center;
 }
 .slider-item img{
     min-width: 100%;
@@ -268,13 +282,13 @@ body{
     height: 100px;
     width: 70px;
     /* padding: 20px 0 0 20px; */
-    color: rgb(168, 168, 168);
+    color: black;
     text-decoration: none;
     font-size: 18px;
     line-height: 100px;
     opacity: .4;
     cursor: pointer;
-    background-color: #252525;
+    background-color: white;
     transform: scaleX(.5);
     transition: .3s all ease-in-out;
 }
@@ -426,7 +440,7 @@ body{
     background-color: rgb(237, 237, 237);
     padding: 20px;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 100px auto;
     grid-column-gap: 20px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -826,9 +840,29 @@ ul.tsc_pagination li a.current
     #content-clip{
         clip-path: url("#mid2");
     }
+    #school-name{
+        margin-left: 15px !important; 
+        margin-top: 10px !important; 
+    }
+    #school-name>div:first-child{
+        font-size: 5.3vw;
+    }
+    .not-top #school-name>div:first-child{
+        font-size: 5.9vw;
+    }
+    #school-info{
+        font-size: 13px;
+    }
+    #school-info ul>li{
+        margin: 0 5px;
+    }
     #menubar{
-        width: 440px;
-        margin-left: -220px
+        width: 70%;
+        margin-left: -220px;
+        left: unset;
+        right: 0;
+        border-radius: 10px 0;
+        top: 162px;
     }
     #menubar ul>li>a {
         font-size: 17px;
@@ -849,15 +883,35 @@ ul.tsc_pagination li a.current
     #navbar.not-top.open{
         height: 285px;
     }
-    #school-info{
-        display: none;
-    }
     #content-clip{
         clip-path: url("#mid2");
     }
+    #school-name{
+        margin-left: 15px !important; 
+        margin-top: 10px !important; 
+    }
+    #school-name>div:first-child{
+        font-size: 5.3vw;
+    }
+    .not-top #school-name>div:first-child{
+        font-size: 5.9vw;
+    }
+    #school-info{
+        font-size: 13px;
+    }
+    #school-info ul>li{
+        margin: 0 5px;
+    }
     #menubar{
-        width: 440px;
-        margin-left: -220px
+        width: 70%;
+        margin-left: -220px;
+        left: unset;
+        right: 0;
+        border-radius: 10px 0;
+        top: 162px;
+        /* width: 440px;
+        margin-left: -220px;
+        top: 162px; */
     }
     #menubar ul>li>a {
         font-size: 17px;
@@ -914,30 +968,52 @@ ul.tsc_pagination li a.current
 }
 
 @media all and (max-width: 480px) { 
-    #school-info{
-        display: none;
+    #navbar, #navbar.not-top{
+        height: 60px;
     }
-    #school-name{
-        font-size: 5vw;
+    #navbar.not-top.open, #navbar.open{
+        height: 335px;
     }
     #content-clip{
         clip-path: url("#mid2");
     }
     #logo img{
-        max-width: 22vw;
+        max-width: unset;
+        max-height: 40px;
+        margin-left: 0;
+    }
+    #logo a{
+        position: relative;
+    }
+    #logo a::before{
+        content: "SMAK YOS SUDARSO BATU";
+        display: block;
+        width: 160px;
+        font-size: 13px;
+        position: absolute;
+        color: white;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        text-decoration: none;
+        left: 10px;
+    }
+    #school-info, #school-name{
+        display: none;
     }
     #menubar ul>li>a {
         font-size: 17px;
         padding: 10px 5px;
     }
     .not-top #menubar, #menubar{
-        top: 80px;
+        top: 60px;
         width: 100%;
         left: 0;
         margin-left: 0;
+        box-shadow: inset 2px 3px 13px -3px #52525270;
     }
     #menubar{
-        top: 210px;
+        top: 60px;
     }
     
     .not-top #menubar>ul>li, #menubar>ul>li{
@@ -947,23 +1023,17 @@ ul.tsc_pagination li a.current
     .not-top #menubar>ul>li>a, #menubar>ul>li>a{
         width: 100%;
         padding: 10px 20px;
+        font-size: 17px;
     }
     .not-top #menubar div, #menubar div{
         display: none;
     }
-    .not-top #burgerbar{
-        right: 20px;
-        top: 20px;
-    }
     #burgerbar{
-        right: 20px;
-        top: 165px;
+        right: 15px;
+        top: 10px;
     }
-    #navbar.not-top.open{
-        height: 285px;
-    }
-    #navbar.open{
-        height: 440px;
+    #header-shadow{
+        margin-top: 60px;
     }
     #content-filter{
         padding: 100px 10px;

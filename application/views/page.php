@@ -57,9 +57,9 @@
     <script>
         let menu = {
             undefined: 0,
-            article: 20,
+            profile: 20,
             event: 40,
-            gallery: 60,
+            ppdb: 60,
             alumni: 80
         };
         if('<?=$this->uri->segment(1)?>' === ''){

@@ -152,7 +152,7 @@ if ($this->uri->segment(3)!=='info') {
 </div>
 <?php } ?>
 <!-- MODAL -->
-<div class="modal fade" id="modal-article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modal-article" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">

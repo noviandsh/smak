@@ -1,0 +1,14 @@
+ALUR PPDB
+Wali -> bukti pembayaran -> Pengurus (nama & tgl lahir) -> admin -> Wali
+
+Revisi:
+
+Halaman PPDB
+Kepala Sekolah
+Profil{
+
+    Sejarah
+    Visi Misi
+    Akreditasi
+
+}

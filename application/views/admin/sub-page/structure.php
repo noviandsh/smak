@@ -48,9 +48,6 @@
             </tbody>
         </table>
     </div>
-    <div style="margin-left:10px;">
-        <button class='btn btn-primary btn-s' data-toggle='modal' data-target='#modal-person' data-menu='add'>Tambah</button>
-    </div><br>
 </div>
 
 <!-- MODAL -->
@@ -136,11 +133,6 @@
             modal.find('#image-old-preview').attr('src', $('#photo-'+id).attr('src'));
             modal.find('#image-old').val(photo);
             firstImg = '<?=base_url()?>assets/img/person/'+photo;
-            if($('#position').val() === 'kepala sekolah'){
-                $('#position').prop('readonly', true);
-            }else{
-                $('#position').prop('readonly', false);
-            }
         }else if(menu === 'add'){
             $('#add-btn').show();
             $('#edit-form-person').show();

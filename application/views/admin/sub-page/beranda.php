@@ -175,7 +175,7 @@
         let button = $(event.relatedTarget); // Button that triggered the modal
         let loc = button.data('location');
         $("#images-location").val(loc);
-        $("#tambah-btn").click(function(){
+        $("#submit-btn").click(function(){
             $('#form-tambah').submit();
         });
     })

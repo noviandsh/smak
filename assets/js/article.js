@@ -1,5 +1,5 @@
 $(window).scroll(function () {
-    if ($(this).scrollTop()  <= 0 ){
+    if ($(this).scrollTop()  <= 210 ){
         $("#navbar").removeClass('not-top');
         // $("#article-content").css('margin-top', '210px');
     }else{

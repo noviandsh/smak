@@ -140,14 +140,23 @@
                     <a href='".base_url()."admin/activity'>
                       <i class='fa fa-list-alt'></i> <span>Log Aktifitas</span>
                     </a>
+                  </li>
+                  <li>
+                    <a href='".base_url()."admin/structure'>
+                      <i class='fa fa-users'></i> <span>Struktur organisasi</span>
+                    </a>
+                    </li>
+                    <li>
+                      <a href='".base_url()."admin/ppdb'>
+                        <i class='fa fa-list-alt'></i> <span>PPDB</span>
+                      </a>
+                    </li><li>
+                    <a href='".base_url()."admin/profile'>
+                      <i class='fa fa-user'></i> <span>Profil sekolah</span>
+                    </a>
                   </li>";
           }
           ?>
-          <!-- <li>
-            <a href="<?=base_url()?>admin/structure">
-              <i class="fa fa-users"></i> <span>Struktur organisasi</span>
-            </a>
-          </li> -->
 
           <li>
             <a href="<?=base_url()?>admin/testi">

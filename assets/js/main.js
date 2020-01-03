@@ -139,13 +139,13 @@ $('.control-prev').click(function () {
 $('.control-next').click(function () {
     moveLeft();
 });
-
+setInterval(moveLeft, 5000);
 
 $("#testi").slick({
     slidesToShow: 3,
     arrows: false,
-    // autoplay: true,
-    // autoplaySpeed: 3000,
+    autoplay: true,
+    autoplaySpeed: 3000,
     responsive: [
         {
             breakpoint: 1024,
@@ -166,9 +166,9 @@ $("#testi").slick({
 $("#gallery-box").slick({
     centerPadding: '60px',
     slidesToShow: 6,
-    // autoplay: true,
+    autoplay: true,
     arrows: false,
-    // autoplaySpeed: 3000,
+    autoplaySpeed: 3000,
     variableWidth: true,
     responsive: [
     {
