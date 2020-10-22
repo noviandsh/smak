@@ -9,7 +9,7 @@ class Admin extends CI_Controller {
         //Do your magic here
         $this->load->model('crud');
         $this->load->helper('form');
-        $this->load->library('encrypt');
+        // $this->load->library('encrypt');
         
         if(!empty($this->session->username)){
             $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));

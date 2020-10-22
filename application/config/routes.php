@@ -68,3 +68,5 @@ $route['article/(:any)'] = 'home/homePage/$1';
 $route['event/(:any)'] = 'home/homePage/$1';
 $route['gallery/(:any)'] = 'home/homePage/$1';
 $route['alumni/(:any)'] = 'home/homePage/$1';
+
+$route['wa/(:any)'] = 'wa';

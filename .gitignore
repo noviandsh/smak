@@ -10,9 +10,13 @@ application/logs/*
 
 composer.lock
 
+application/views/wa/*
+application/controllers/Wa.php
+
 assets/AdminLTE/*
 assets/ckfinder/*
 assets/ckeditor/*
+assets/wa/*
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*

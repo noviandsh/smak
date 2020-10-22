@@ -183,7 +183,7 @@ body{
     font-size: 34px;
 }
 .not-top #school-name{
-    transform: translateY(-80px);
+    transform: translateY(-120px);
 }
 .not-top #logo{
     /* transition: .4s all ease-in-out; */
@@ -754,6 +754,9 @@ body{
 #all-testi .testi-card{
     width: unset;
 }
+#ppdb-page img{
+    max-width: 100%;
+}
 /*paginasi*/
 #pagination{
     margin: 0 0 15px 0;
@@ -826,8 +829,13 @@ ul.tsc_pagination li a.current
 | MEDIA QUERIES
 | -------------------------------------------------------------------------
 */
-@media all and (min-width: 1024px) and (max-width: 1280px) { 
-
+@media all and (min-width: 1440px) { 
+    #school-name{
+        margin-top: -20px;
+    }
+    #school-name>div:first-child{
+        font-size: 4.9vw;
+    }
 }
 
 @media all and (min-width: 768px) and (max-width: 1024px) { 
@@ -1080,5 +1088,8 @@ ul.tsc_pagination li a.current
     }
     #all-testi{
         grid-template-columns: auto;
+    }
+    #page-container nav{
+        margin-top: 60px;
     }
 }

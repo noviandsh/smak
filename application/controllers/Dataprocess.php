@@ -8,7 +8,7 @@ class Dataprocess extends CI_Controller {
         parent::__construct();
         //Do your magic here
         $this->load->helper(array('form', 'file'));
-        $this->load->library(array('image_lib', 'encrypt'));
+        $this->load->library(array('image_lib'));
         $this->load->model('crud');
         date_default_timezone_set('Asia/Jakarta');
         if(empty($this->session->username) && $this->uri->segment(2) != 'login'){

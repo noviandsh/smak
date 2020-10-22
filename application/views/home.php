@@ -8,6 +8,11 @@ function readMore($str, $char)
     $result = strip_tags($result);
     return $result;
 }
+function thumb($image){
+    $extension_pos = strrpos($image, '.'); // find position of the last dot, so where the extension starts
+    $thumb = substr($image, 0, $extension_pos) . '_thumb' . substr($image, $extension_pos);
+    return $thumb;
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,7 +119,7 @@ function readMore($str, $char)
                 <div id="gallery-box">
                     <?php 
                         foreach($gallery as $gal){
-                            echo "<a href='".base_url()."assets/img/gallery/".$gal['file']."' data-aos='zoom-in-up'><div class='gallery-item' style='background:url(".base_url()."assets/img/gallery/".$gal['file'].");background-size:cover;background-position:center;'>
+                            echo "<a href='".base_url()."assets/img/gallery/".$gal['file']."' data-aos='zoom-in-up'><div class='gallery-item' style='background:url(".base_url()."assets/img/gallery/".thumb($gal['file']).");background-size:cover;background-position:center;'>
                                 </div></a>";
                         }
                     ?>
