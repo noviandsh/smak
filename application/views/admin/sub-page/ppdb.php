@@ -92,7 +92,7 @@
     </div>
     <div class="section-foot" style="margin-left:10px;">
         <a href="<?=base_url()?>admin/ppdb" class="btn btn-info btn-s" style="display:none;">Tampilkan semua data</a>
-        <?=$count['verified']>0?'<a id="export-data" href="<?=base_url()?>dataprocess/exporttoxls" class="btn btn-success btn-s">Simpan data ke Excel</a>':null?>
+        <?=$count['verified']>0?'<a id="export-data" href="'.base_url().'dataprocess/exporttoxls" class="btn btn-success btn-s">Simpan data ke Excel</a>':null?>
         
         <button id="delete-selected" class="btn btn-danger btn-s" data-toggle="modal" data-target="#modal-confirm" disabled>Hapus data yang dipilih</button>
     </div><br>
