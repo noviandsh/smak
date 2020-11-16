@@ -51,6 +51,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 
+// PPDB
+$route['ppdb'] = 'ppdb';
+
 $route['admin'] = 'admin';
 $route['dataprocess'] = 'dataprocess';
 $route['dataprocess/login'] = 'dataprocess/login';
@@ -61,7 +64,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['article'] = 'home/homePage';
 $route['event'] = 'home/homePage';
 $route['gallery'] = 'home/homePage';
-$route['ppdb'] = 'home/homePage';
+// $route['ppdb'] = 'home/homePage';
 $route['profile'] = 'home/homePage';
 $route['alumni'] = 'home/homePage';
 $route['article/(:any)'] = 'home/homePage/$1';
