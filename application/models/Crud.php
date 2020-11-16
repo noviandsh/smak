@@ -30,6 +30,11 @@ class Crud extends CI_Model {
         $res=$this->db->get_where($table, $where);
         return $res->num_rows();
     }
+    public function GetCountMultiWhere($table, $column, $where){
+        $this->db->where_in($column, $where);
+        $res=$this->db->get($table);
+        return $res->num_rows();
+    }
 
     public function GetCountGroup(){
         $this->db->select('kelas, COUNT(kelas) as total');
@@ -41,6 +46,12 @@ class Crud extends CI_Model {
 
     public function GetWhere($table, $where){
         $res=$this->db->get_where($table, $where); // Kode ini berfungsi untuk memilih tabel yang akan ditampilkan
+        return $res->result_array(); // Kode ini digunakan untuk mengembalikan hasil operasi $res menjadi sebuah array
+    }
+
+    public function GetWhereIn($table, $column, $where){
+        $this->db->where_in($column, $where);
+        $res=$this->db->get($table);
         return $res->result_array(); // Kode ini digunakan untuk mengembalikan hasil operasi $res menjadi sebuah array
     }
 
@@ -72,8 +83,19 @@ class Crud extends CI_Model {
     }
 
     public function Insert($table,$data){
-        $res = $this->db->insert($table, $data); // Kode ini digunakan untuk memasukan record baru kedalam sebuah tabel
-        return $res; // Kode ini digunakan untuk mengembalikan hasil $res
+        if($this->db->insert($table, $data)){
+            // return 'haha'; // Kode ini digunakan untuk mengembalikan hasil $res
+            $res = array(
+                'stat' => 1,
+                'error' => 0
+            );
+        }else{
+            $res = array(
+                'stat' => 0,
+                'error' => $this->db->error()
+            );
+        }
+        return $res;
     }
 
     public function pict($path, $input){

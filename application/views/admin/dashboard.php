@@ -21,9 +21,14 @@
 
 	<link rel="stylesheet" href="<?=base_url('assets/css/magnific-popup.css'); ?>">
   
-  <link href="<?php echo base_url('assets/css/jquery-ui.css');?>" rel="stylesheet"/>
-  <link href="<?php echo base_url('assets/css/jquery-ui.theme.css');?>" rel="stylesheet"/>
-  <link href="<?php echo base_url('assets/css/jquery-ui-timepicker-addon.css');?>" rel="stylesheet"/>
+  <link href="<?=base_url('assets/css/jquery-ui.css');?>" rel="stylesheet"/>
+  <link href="<?=base_url('assets/css/jquery-ui.theme.css');?>" rel="stylesheet"/>
+  <link href="<?=base_url('assets/css/jquery-ui-timepicker-addon.css');?>" rel="stylesheet"/>
+
+  <link href="<?=base_url()?>assets/DataTables/datatables.min.css" rel="stylesheet"/>
+  <!-- Zoom CSS -->
+  <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/zoom.css')?>">
+  
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -129,6 +134,16 @@
               <i class="fa fa-home"></i> <span>Beranda</span>
             </a>
           </li>
+          <li>
+            <a href="<?=base_url()?>admin/ppdbpage">
+              <i class='fa fa-file-text'></i> <span>Halaman PPDB</span>
+            </a>
+          </li>
+          <li>
+            <a href="<?=base_url()?>admin/ppdb">
+              <i class='fa fa-id-badge'></i> <span>PPDB</span>
+            </a>
+          </li>
           <?php 
           if($this->session->type == 0){
             echo "<li>
@@ -145,12 +160,8 @@
                     <a href='".base_url()."admin/structure'>
                       <i class='fa fa-users'></i> <span>Struktur organisasi</span>
                     </a>
-                    </li>
-                    <li>
-                      <a href='".base_url()."admin/ppdb'>
-                        <i class='fa fa-list-alt'></i> <span>PPDB</span>
-                      </a>
-                    </li><li>
+                  </li>
+                  <li>
                     <a href='".base_url()."admin/profile'>
                       <i class='fa fa-user'></i> <span>Profil sekolah</span>
                     </a>
@@ -232,6 +243,8 @@
   <script src="<?=base_url(); ?>assets/AdminLTE/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="<?=base_url(); ?>assets/AdminLTE/dist/js/demo.js"></script>
+  <!-- Zoom Js -->
+  <script src="<?=base_url(); ?>assets/js/zoom.js"></script>
   <script>
     $(document).ready(function () {
       $('.sidebar-menu').tree()

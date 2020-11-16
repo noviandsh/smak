@@ -264,6 +264,53 @@ ul.tsc_pagination li a.current
     width: unset !important;
     height: unset !important;
 }
+
+.label.status{
+    font-size: 85% !important;
+}
+
+.ppdb-check{
+    width: 20px;
+    height: 20px;
+    border: 2px solid #4e4d4d;
+    border-radius: 3px;
+    float: left;
+    margin-right: 15px;
+}
+.ppdb-check i{
+    display: none;
+    color: #dc2626;
+}
+.ppdb-check.done i{
+    display: block;
+    font-size: 36px;
+    margin: -11px -8px;
+}
+#modal-data textarea{
+    resize: none;
+}
+table.custom th{
+    width: 180px;
+}
+table.custom img{
+    max-height: 100px;
+    max-width: 100px;
+    cursor: zoom-in;
+}
+td.details-control {
+    background: url('../img/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../img/details_close.png') no-repeat center center;
+}
+.selectable{
+    cursor: pointer;
+}
+#brosur img{
+    max-height: 250px;
+    max-width: 250px;
+}
 @media all and (max-width:1024px){
     #testimoni-container{
         grid-template-columns: repeat(4, auto);
