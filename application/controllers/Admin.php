@@ -235,8 +235,36 @@ class Admin extends CI_Controller {
     {
         $this->sessionCheck('admin');
         $subData['ppdb'] = $this->crud->Get('ppdb');
+        $subData['regist'] = $this->crud->Get('reg_ppdb');
         $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
+        $subData['count'] = array(
+            'new' => $this->crud->GetCountMultiWhere('reg_ppdb', 'status', array(0,2)),
+            'waiting' => $this->crud->GetCountMultiWhere('reg_ppdb', 'status', array(1,3)),
+            'verified' => $this->crud->GetCountWhere('reg_ppdb', array('status'=>4))
+        );
         $data['content'] = $this->load->view('admin/sub-page/ppdb', $subData, TRUE);
+        $this->load->view('admin/dashboard', $data);
+    }
+    public function ppdbpage()
+    {
+        $subData['contactType'] = array(
+            'wa' => 'Whatsapp',
+            'phone' => 'No. Handphone',
+            'email' => 'Email',
+            'office' => 'No. Kantor',
+            'address' => 'Alamat',
+            'fb' => 'Facebook',
+            'yt' => 'Youtube',
+            'ig' => 'Instagram',
+        );
+        $this->sessionCheck('admin');
+        $subData['ppdb'] = $this->crud->Get('ppdb')[0];
+        $subData['admin'] = $this->crud->GetWhere('user', array('username'=>$this->session->username));
+        $subData['flow'] = $this->crud->Get('flow_ppdb');
+        $subData['schedule'] = $this->crud->Get('schedule_ppdb');
+        $subData['contact'] = $this->crud->Get('contact_ppdb');
+        $subData['bank'] = $this->crud->Get('bank_ppdb');
+        $data['content'] = $this->load->view('admin/sub-page/ppdb-page', $subData, TRUE);
         $this->load->view('admin/dashboard', $data);
     }
     public function profile()
